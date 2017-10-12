@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "com.sccupyparking.supervisor"
+        versionCode = "10"
+        version     = "1.0.0" >
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>Occupy Parking - Supervisor App</name>
+
+    <description>
+        App to Manage Parkings of a Parking Lot.
+    </description>
+
+    <author href="https://www.infinisystem.com" email="support@infiniteit.biz">
+        Infini Systems
+    </author>
+
+    
+    <preference name="orientation" value="portrait" />
+    
+    
+    <plugin name="cordova-plugin-whitelist" />
+    
+    <content src="index.html"/>
+    <access origin="*"/>
+    <platform name="android" />
+    
+    <gap:plugin name="cordova-plugin-x-toast" source="npm" />
+    <gap:plugin name="org.apache.cordova.statusbar" source="npm" />
+
+</widget>

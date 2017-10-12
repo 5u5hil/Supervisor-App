@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en-US" ng-app="occupyparking">
+    <head>
+        <title>Occupy Parking - Supervisor App</title>
+        <script src="js/checkLogin.js"></script>
+        <meta content="IE=edge" http-equiv="x-ua-compatible">
+        <meta content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" name="viewport">
+        <meta content="yes" name="apple-mobile-web-app-capable">
+        <meta content="yes" name="apple-touch-fullscreen">
+        <!-- Fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+        <!-- Icons -->
+        <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" media="all" rel="stylesheet" type="text/css">
+        <!-- Styles -->
+        <link href="css/keyframes.css" rel="stylesheet" type="text/css">
+        <link href="css/materialize.min.css" rel="stylesheet" type="text/css">
+        <link href="css/swiper.css" rel="stylesheet" type="text/css">
+        <link href="css/swipebox.min.css" rel="stylesheet" type="text/css">
+        <link href="css/style.css" rel="stylesheet" type="text/css">
+
+
+
+
+    </head>
+
+    <body>
+        <div class="m-scene" id="main"> <!-- Main Container -->
+
+            <!-- Left Sidebar -->
+            <ul id="slide-out-left" class="side-nav collapsible">
+                <li>
+                    <div class="sidenav-header primary-color">
+                        <div class="nav-social">
+                            <i class="ion-social-facebook"></i>
+                            <i class="ion-social-twitter"></i>
+                            <i class="ion-social-tumblr"></i>
+                        </div>
+                        <div class="nav-avatar">
+                            <img class="circle avatar" src="img/user.jpg" alt="">
+                            <div class="avatar-body">
+                                <h3>Halo</h3>
+                                <p>Material Mobile</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="ion-android-home"></i> Home <span class="badge blue lighten-2">5</span>
+                    </div>
+                    <div class="collapsible-body">
+                        <ul class="collapsible">
+                            <li>
+                                <a href="index.html">Classic</a>
+                                <a href="index-sliced.html">Sliced</a>
+                                <a href="index-slider.html">Slider</a>
+                                <a href="index-drawer.html">Drawer</a>
+                                <a href="index-walkthrough.html">Walkthrough</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="ion-android-exit"></i> Layout <span class="badge blue lighten-2">5</span>
+                    </div>
+                    <div class="collapsible-body">
+                        <ul class="collapsible">
+                            <li>
+                                <a href="material.html">Material</a>
+                                <a href="left-sidebar.html">Left</a>
+                                <a href="right-sidebar.html">Right</a>
+                                <a href="dual-sidebar.html">Dual</a>
+                                <a href="blank.html">Blank</a>
+                            </li>
+                        </ul>
+                    </div>  
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="ion-android-document"></i> Pages <span class="badge blue lighten-2">12</span>
+                    </div>
+                    <div class="collapsible-body">
+                        <ul class="collapsible">
+                            <li>
+                                <a href="article.html">Article</a>
+                                <a href="event.html">Event</a>
+                                <a href="project.html">Project</a>
+                                <a href="player.html">Music Player</a>
+                                <a href="todo.html">ToDo</a>
+                                <a href="category.html">Category</a>
+                                <a href="product.html">Product</a>
+                                <a href="checkout.html">Checkout</a>
+                                <a href="search.html">Search</a>
+                                <a href="faq.html">Faq</a>
+                                <a href="coming-soon.html">Coming Soon</a>
+                                <a href="404.html">404</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="ion-android-apps"></i> App <span class="badge blue lighten-2">11</span>
+                    </div>
+                    <div class="collapsible-body">
+                        <ul class="collapsible">
+                            <li>
+                                <a href="calendar.html">Calendar</a>
+                                <a href="profile.html">Profile</a>
+                                <a href="chat.html">Chat</a>
+                                <a href="login.html">Login</a>
+                                <a href="signup.html">Sign Up</a>
+                                <a href="lockscreen.html">Lockscreen</a>
+                                <a href="forgot.html">Password</a>
+                                <a href="notification.html">Notification</a>
+                                <a href="chart.html">Chart</a>
+                                <a href="timeline.html">Timeline</a>
+                                <a href="activity.html">Activity</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="ion-android-list"></i> Blog <span class="badge blue lighten-2">2</span>
+                    </div>
+                    <div class="collapsible-body">
+                        <ul class="collapsible">
+                            <li>
+                                <a href="blog.html">Classic</a>
+                                <a href="blog-card.html">Card</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="ion-android-image"></i> Gallery <span class="badge blue lighten-2">3</span>
+                    </div>
+                    <div class="collapsible-body">
+                        <ul class="collapsible">
+                            <li>
+                                <a href="gallery-filter.html">Filter</a>
+                                <a href="gallery-masonry.html">Masonry</a>
+                                <a href="gallery-card.html">Card</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <i class="ion-android-camera"></i> Portfolio <span class="badge blue lighten-2">3</span>
+                    </div>
+                    <div class="collapsible-body">
+                        <ul class="collapsible">
+                            <li>
+                                <a href="portfolio-filter.html">Filter</a>
+                                <a href="portfolio-masonry.html">Masonry</a>
+                                <a href="portfolio-card.html">Card</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="shop.html" class="no-child"><i class="ion-android-playstore"></i> Shop</a></li>
+                <li><a href="video.html" class="no-child"><i class="ion-ios-videocam"></i> Video</a></li>
+                <li><a href="news.html" class="no-child"><i class="ion-social-rss"></i> News</a></li>
+                <li><a href="contact.html" class="no-child"><i class="ion-android-map"></i> Contact</a></li>
+            </ul>
+            <!-- End of Sidebars -->
+
+            <!-- Page Content -->
+            <div id="content">
+
+                <!-- Toolbar -->
+                <div id="toolbar" class="primary-color">
+                    <div class="open-left" id="open-left" data-activates="slide-out-left">
+                        <i class="ion-android-menu"></i>
+                    </div>
+                    <span class="title">Occupy Parking</span>
+
+                </div>
+
+
+
+                <!-- Main Content -->
+                <div class="animated fadeinup" ng-controller="homeCtrl">
+                    <div class="h-banner animated fadeindown">
+                        <div class="parallax bg-3">
+                            <div class="floating-button animated bouncein delay-3">
+                                <span class="btn-floating resize btn-large waves-effect waves-light accent-color btn z-depth-1  modal-trigger" href="#modal1">
+                                    <i class="ion-plus"></i>
+                                </span>
+                            </div>
+            <div class="banner-title">Jane Lee</div>
+
+                        </div>
+                    </div>
+
+                    <div class="p-t-20">
+                        <ul class="tabs">
+                            <li class="tab"><a class="active" href="#test1">Upcoming</a></li>
+                            <li class="tab"><a href="#test2">In the Lot</a></li>
+                            <li class="tab"><a href="#test3">Monthly</a></li>
+
+                        </ul>
+                    </div>
+
+                    <div id="test1">
+                        <div class="container activity p-l-r-20">
+                            <div class="row m-l-0">
+                                <div class="col">
+                                    <div ng-if="booking.bstatus = 1 && booking.btype != 3" class="contact" ng-repeat="booking in bookings">
+                                        <span class="date">{{ booking.stime}}</span>
+                                        <div class="dot z-depth-1">
+                                        </div>
+                                        <p>
+                                            #{{ booking.id}} - {{booking.rnum}}
+                                        </p>
+                                        <span>{{booking.mname}}</span>
+                                        <div class="friends">
+                                            <i class="ion-log-in circle"></i> 
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="test2">
+                        <div class="container activity p-l-r-20">
+                            <div class="row m-l-0">
+                                <div class="col">
+
+                                    <div ng-if="booking.bstatus = 2 && booking.btype != 3" class="contact" ng-repeat="booking in bookings">
+                                        <span class="date">{{ booking.stime}}</span>
+                                        <div class="dot z-depth-1">
+                                        </div>
+                                        <p>
+                                            #{{ booking.id}} - {{booking.rnum}}
+                                        </p>
+                                        <span>{{booking.mname}}</span>
+                                        <div class="friends">
+                                            <i class="ion-log-out circle"></i> 
+                                            <i class="ion-card circle"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="test3">
+                        <div class="container activity p-l-r-20">
+                            <div class="row m-l-0">
+                                <div class="col">
+
+                                    <div ng-if="booking.btype == 3" class="contact" ng-repeat="booking in bookings">
+                                        <span class="date">{{ booking.stime}}</span>
+                                        <div class="dot z-depth-1">
+                                        </div>
+                                        <p>
+                                            #{{ booking.id}} - {{booking.rnum}}
+                                        </p>
+                                        <span>{{booking.mname}}</span>
+                                        <div class="friends">
+                                            <i class="ion-log-in circle" ng-if="booking.checkin_time < booking.checkout_time"></i> 
+                                            <i class="ion-log-out circle" ng-if="booking.checkin_time > booking.checkout_time"></i>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <footer class="page-footer primary-color">
+
+                        <div class="footer-copyright blue darken-1">
+                            <div class="container">
+                                2017
+                                <a class="grey-text text-lighten-4 right" href="#!">Powered by i-Stron</a>
+                            </div>
+                        </div>
+                    </footer>
+
+                </div> 
+                <!-- End of Main Contents -->
+
+
+            </div> <!-- End of Page Content -->
+
+        </div> <!-- End of Page Container -->
+
+
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+                <h4>Add New Booking</h4>
+                <form>
+                    <div class="input-field">
+                        <i class="ion-iphone prefix"></i> 
+                        <input class="validate" id="mobile" type="text" name="mobile"> 
+                        <label for="mobile" class="">Mobile Number</label>
+                    </div>
+
+                    <div class="input-field">
+                        <i class="ion-model-s prefix"></i> 
+                        <input class="validate" id="rnum" type="text" name="rnum"> 
+                        <label for="rnum">Registration Number</label>
+                    </div>
+
+                    <div style="margin-bottom:20px;">
+                        <input name="atype" type="radio" id="twow" />
+                        <label for="twow">Two Wheeler</label>
+
+                        <input name="atype" type="radio" id="fwow" />
+                        <label for="fwow">Four Wheeler</label>
+                    </div>
+                </form>
+                <button class="waves-effect waves-light btn-large accent-color width-100 m-b-20 animated bouncein delay-4" id="addBooking">Add Booking</button>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-action modal-close waves-effect waves-green btn-flat pull-left">Cancel</button>
+
+            </div>
+        </div>
+        <script src="cordova.js"></script>
+
+        <script src="js/jquery-2.1.0.min.js"></script>
+        <script src="js/jquery.swipebox.min.js"></script>   
+        <script src="js/materialize.min.js"></script> 
+        <script src="js/swiper.min.js"></script>  
+        <script src="js/jquery.mixitup.min.js"></script>
+        <script src="js/masonry.min.js"></script>
+        <script src="js/chart.min.js"></script>
+        <script src="js/functions.js"></script>
+        <script src="js/myscripts.js"></script>
+
+        <script src="js/angular/angular.min.js"></script>
+        <script src="js/angular-sanitize.js"></script>
+        <script src="js/app.js"></script>
+
+    </body>
+</html>

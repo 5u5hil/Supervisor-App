@@ -192,7 +192,7 @@
                                     <i class="ion-plus"></i>
                                 </span>
                             </div>
-            <div class="banner-title">Jane Lee</div>
+                            <div class="banner-title">Jane Lee</div>
 
                         </div>
                     </div>
@@ -210,7 +210,7 @@
                         <div class="container activity p-l-r-20">
                             <div class="row m-l-0">
                                 <div class="col">
-                                    <div ng-if="booking.bstatus = 1 && booking.btype != 3" class="contact" ng-repeat="booking in bookings">
+                                    <div ng-if="booking.bstatus == 1 && booking.btype != 3" class="contact" ng-repeat="booking in bookings">
                                         <span class="date">{{ booking.stime}}</span>
                                         <div class="dot z-depth-1">
                                         </div>
@@ -219,7 +219,7 @@
                                         </p>
                                         <span>{{booking.mname}}</span>
                                         <div class="friends">
-                                            <i class="ion-log-in circle"></i> 
+                                            <i class="ion-log-in circle" ng-click="checkin(booking.id)"></i> 
 
                                         </div>
                                     </div>
@@ -233,7 +233,7 @@
                             <div class="row m-l-0">
                                 <div class="col">
 
-                                    <div ng-if="booking.bstatus = 2 && booking.btype != 3" class="contact" ng-repeat="booking in bookings">
+                                    <div ng-if="booking.bstatus == 2 && booking.btype != 3" class="contact" ng-repeat="booking in bookings">
                                         <span class="date">{{ booking.stime}}</span>
                                         <div class="dot z-depth-1">
                                         </div>
@@ -267,8 +267,8 @@
                                         </p>
                                         <span>{{booking.mname}}</span>
                                         <div class="friends">
-                                            <i class="ion-log-in circle" ng-if="booking.checkin_time < booking.checkout_time"></i> 
-                                            <i class="ion-log-out circle" ng-if="booking.checkin_time > booking.checkout_time"></i>
+                                            <i ng-click="minout(booking.id,1)" class="ion-log-in circle" ng-if="booking.checkin_time < booking.checkout_time"></i> 
+                                            <i ng-click="minout(booking.id,2)" class="ion-log-out circle" ng-if="booking.checkin_time > booking.checkout_time"></i>
                                         </div>
                                     </div>
 

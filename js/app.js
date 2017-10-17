@@ -53,7 +53,7 @@ app.controller("homeCtrl", function ($scope, $http) {
                 });
 
             } else {
-                if (get('toSync') != null || !isArray(get('toSync')))
+                if (get('toSync') == null || !isArray(get('toSync')))
                     set("toSync", JSON.stringify([]));
 
                 var toSync = get('toSync');
@@ -67,14 +67,14 @@ app.controller("homeCtrl", function ($scope, $http) {
     }
 
 
-    $scope.minout = function (oid, type) {
+    $scope.minout = function (oid, otype) {
 
-        var data = {oid: oid, userId: get('user').ID, type: type};
+        var data = {oid: oid, userId: get('user').ID, type: otype};
         var url = apiEndpoint + 'minout';
         var type = 'POST';
 
 
-        var r = type == 1 ? confirm("Confirm Checkin?") : confirm("Confirm Checkout?");
+        var r = confirm("Confirm " + (otype == 1 ? 'Checkin' : 'Checkout') + "?");
         if (r == true) {
 
             if (online()) {
@@ -85,17 +85,9 @@ app.controller("homeCtrl", function ($scope, $http) {
                     success: function (data) {
                         $scope.$applyAsync(function () {
                             if (data) {
-                                var dt = new Date();
-                                var h = dt.getHours(), m = dt.getMinutes();
-                                var time = (h > 12) ? (h - 12 + ':' + m + ' PM') : (h + ':' + m + ' AM');
-
                                 objIndex = $scope.bookings.findIndex((obj => obj.id == oid));
-                                $scope.bookings[objIndex].stime = time;
+                                $scope.bookings[objIndex] = data;
 
-                                if (type == 1)
-                                    $scope.bookings[objIndex].checkin_time = data;
-                                else
-                                    $scope.bookings[objIndex].checkout_time = data;
                             }
                         });
                         set("bookings", {lastSync: new Date(), data: $scope.bookings});
@@ -103,7 +95,7 @@ app.controller("homeCtrl", function ($scope, $http) {
                 });
 
             } else {
-                if (get('toSync') != null || !isArray(get('toSync')))
+                if (get('toSync') == null || !isArray(get('toSync')))
                     set("toSync", JSON.stringify([]));
 
                 var toSync = get('toSync');

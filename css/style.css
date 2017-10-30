@@ -2451,3 +2451,16 @@ span.data-color {
     color: #1ac897;
     margin-right: 10px;
 }
+
+
+.prepaid{
+    background-color: #66f55a !important;
+}
+
+.postpaid{
+    background-color: #ff000f !important;
+}
+
+.vred{
+color : #b34a4a !important;
+}

@@ -13,13 +13,13 @@
         <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" media="all" rel="stylesheet" type="text/css">
         <!-- Styles -->
         <link href="css/keyframes.css" rel="stylesheet" type="text/css">
-      
+
         <link href="css/materialize.min.css" rel="stylesheet" type="text/css">
         <link href="css/swiper.css" rel="stylesheet" type="text/css">
         <link href="css/swipebox.min.css" rel="stylesheet" type="text/css">
         <link href="css/style.css" rel="stylesheet" type="text/css">
         <link href="css/pace-theme-center-circle.css" rel="stylesheet" type="text/css"/>
-  
+
         <style>
             .meh {
                 margin-top: 70px;
@@ -56,6 +56,8 @@
                 </li>
 
                 <li><a href="#" class="no-child"><i class="ion-android-sync"></i> Sync</a></li>
+                <li><a href="#" ng-click="ref()" class="no-child"><i class="ion-shuffle"></i> Refresh</a></li>
+
                 <li><a href="#" class="no-child"><i class="ion-android-exit"></i> Logout</a></li>
             </ul>
             <!-- End of Sidebars -->
@@ -90,7 +92,7 @@
                                     <i class="ion-plus"></i>
                                 </span>
                             </div>
-                            
+
 
                         </div>
                     </div>
@@ -140,7 +142,8 @@
                                         </p>
                                         <span>{{booking.mname}}</span>
                                         <div class="friends">
-                                            <i class="ion-log-out circle"></i> 
+                                            <i class="ion-log-out circle" ng-if="booking.via == 1" ng-click="scheckout(booking.id,booking.checkin_time)"></i> 
+                                            <i class="ion-log-out circle" ng-if="booking.via != 1" ng-click="ncheckout(booking.id,checkin_time)"></i> 
                                         </div>
                                     </div>
 

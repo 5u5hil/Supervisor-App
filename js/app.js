@@ -210,7 +210,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
                     success: function (data) {
                         if (data == 'Booking added') {
                             toast("Booking Added.");
-                            $('#modal1').modal('close');
+                            $('.modal-close').click();
                             $('#addBooking').each(function () {
                                 this.reset();
                             });

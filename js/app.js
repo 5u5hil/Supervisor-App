@@ -41,6 +41,52 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
 
     }
 
+    $scope.ncheckout = function (oid) {
+        var data = {oid: oid, userId: get('user').ID};
+        var url = apiEndpoint + 'checkout';
+        var type = 'POST';
+
+
+
+
+        var r = confirm("Confirm Checkout?");
+        if (r == true) {
+            if (online()) {
+                $.ajax({
+                    url: url,
+                    type: type,
+                    data: data,
+                    success: function (data) {
+                        $scope.$applyAsync(function () {
+                            if (data == 1) {
+//                                    objIndex = $scope.bookings.findIndex((obj => obj.id == oid));
+//                                    $scope.bookings[objIndex].bstatus = 3;
+//                                   
+                                toast("Checkout Done")
+                            } else {
+                                toast("Oops ... looks like something went wrong.")
+                            }
+                        });
+                        set("bookings", {lastSync: new Date(), data: $scope.bookings});
+                    }
+                });
+
+            } else {
+                if (get('toSync') == null || !isArray(get('toSync')))
+                    set("toSync", JSON.stringify([]));
+
+                var toSync = get('toSync');
+                toSync.push({url: url, data: data, type: type, pushedOn: new Date()});
+                set('toSync', toSync);
+
+            }
+        }
+
+
+
+
+    }
+
     $scope.scheckout = function (oid, time) {
         var data = {oid: oid, userId: get('user').ID};
         var url = apiEndpoint + 'scheckout';

@@ -12,7 +12,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
 
 
     $interval(function () {
-        refresh();
+        // refresh();
     }, 20000)
 
 
@@ -42,45 +42,58 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
     }
 
     $scope.ncheckout = function (oid) {
-        var data = {oid: oid, userId: get('user').ID};
+        var data = {oid: oid, userId: get('user').ID, pid: get('user').parkingLot};
         var url = apiEndpoint + 'checkout';
         var type = 'POST';
 
 
 
 
-        var r = confirm("Confirm Checkout?");
-        if (r == true) {
-            if (online()) {
-                $.ajax({
-                    url: url,
-                    type: type,
-                    data: data,
-                    success: function (data) {
-                        $scope.$applyAsync(function () {
-                            if (data == 1) {
-//                                    objIndex = $scope.bookings.findIndex((obj => obj.id == oid));
-//                                    $scope.bookings[objIndex].bstatus = 3;
-//                                   
-                                toast("Checkout Done")
-                            } else {
-                                toast("Oops ... looks like something went wrong.")
+
+        if (online()) {
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                success: function (res) {
+
+                    toast(res);
+                    var r = confirm("Confirm Checkout?");
+                    if (r == true) {
+                        $.ajax({
+                            url: apiEndpoint + "confirmCheckout",
+                            type: 'POST',
+                            data: data,
+                            success: function (meh) {
+                                $scope.$applyAsync(function () {
+
+                                    if (meh == 1) {
+                                        objIndex = $scope.bookings.findIndex((obj => obj.id == oid));
+                                        $scope.bookings[objIndex].bstatus = 3;
+
+                                        toast("Checkout Done")
+                                    } else {
+                                        toast("Oops ... looks like something went wrong.")
+                                    }
+                                });
                             }
                         });
-                        set("bookings", {lastSync: new Date(), data: $scope.bookings});
                     }
-                });
+                    set("bookings", {lastSync: new Date(), data: $scope.bookings});
+                }
+            });
 
-            } else {
-                if (get('toSync') == null || !isArray(get('toSync')))
-                    set("toSync", JSON.stringify([]));
+        } else {
+            alert("No Internet Connection. Please click the sync button once connected back to the internet.");
+            if (get('toSync') == null || !isArray(get('toSync')))
+                set("toSync", JSON.stringify([]));
 
-                var toSync = get('toSync');
-                toSync.push({url: url, data: data, type: type, pushedOn: new Date()});
-                set('toSync', toSync);
+            var toSync = get('toSync');
+            toSync.push({url: url, data: data, type: type, pushedOn: new Date()});
+            set('toSync', toSync);
 
-            }
         }
+
 
 
 
@@ -104,6 +117,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
         var humanReadable = {};
         humanReadable.hours = Math.floor(hDiff);
         humanReadable.minutes = minDiff - 60 * humanReadable.hours;
+
 
 
 
@@ -135,6 +149,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
                     });
 
                 } else {
+                    alert("No Internet Connection. Please click the sync button once connected back to the internet.");
                     if (get('toSync') == null || !isArray(get('toSync')))
                         set("toSync", JSON.stringify([]));
 
@@ -181,6 +196,8 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
                 });
 
             } else {
+                alert("No Internet Connection. Please click the sync button once connected back to the internet.");
+
                 if (get('toSync') == null || !isArray(get('toSync')))
                     set("toSync", JSON.stringify([]));
 
@@ -224,6 +241,8 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
                 });
 
             } else {
+                alert("No Internet Connection. Please click the sync button once connected back to the internet.");
+
                 if (get('toSync') == null || !isArray(get('toSync')))
                     set("toSync", JSON.stringify([]));
 
@@ -243,6 +262,12 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
         var data = $("#addBooking").serialize();
         var url = apiEndpoint + 'addBooking';
         var type = 'POST';
+
+        if ($("[name='mobile'").val() == '' || $("[name='vechicle_no'").val() == '') {
+            toast("Please Enter all the details.");
+            return false;
+        }
+
 
 
         var r = confirm("Confirm Booking?");
@@ -267,6 +292,8 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
                 });
 
             } else {
+                alert("No Internet Connection. Please click the sync button once connected back to the internet.");
+
                 if (get('toSync') == null || !isArray(get('toSync')))
                     set("toSync", JSON.stringify([]));
 
@@ -276,6 +303,33 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
 
             }
         }
+    }
+
+    $scope.sync = function () {
+        if (online()) {
+            var toSync = get('toSync');
+
+            for (var i = toSync.length - 1; i >= 0; i--) {
+                $.ajax({
+                    url: toSync[i].url,
+                    type: toSync[i].type,
+                    data: toSync[i].data,
+                    success: function (data) {
+                        toSync.splice(i, 1);
+                    }
+                });
+            }
+
+            set('toSync', toSync);
+
+        } else {
+            alert("Data cannot be synced as the device is not connected to the internet");
+        }
+    }
+
+    $scope.logout = function () {
+        window.localStorage.removeItem("user");
+        window.location.href = 'login.html';
     }
 
 });
@@ -300,8 +354,8 @@ $(document).ready(function () {
             $(".contact[data-booking-id='" + sterm + "']").show();
             $(".f" + $(".contact[data-booking-id='" + sterm + "']").parent().parent().parent().parent().attr('id')).click()
 
-            $(".contact[data-vehicle-number='" + sterm + "']").show();
-            $(".f" + $(".contact[data-vehicle-number='" + sterm + "']").parent().parent().parent().parent().attr('id')).click()
+            $(".contact[data-vehicle-number*='" + sterm + "']").show();
+            $(".f" + $(".contact[data-vehicle-number*='" + sterm + "']").parent().parent().parent().parent().attr('id')).click()
 
 
         }

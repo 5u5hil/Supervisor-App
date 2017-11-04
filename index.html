@@ -32,6 +32,29 @@
                 margin: -43px 10px 0px;
                 float: right;
             }
+
+            .col{
+                width: 100%
+            }
+            i {
+                float: right;
+                font-size: 20px !important;
+                color: #1ac897;
+            }
+            .contact {
+                position: relative;
+                padding: 5px 16px 0px 65px;
+            }
+
+            .activity .date {
+                position: absolute;
+                top: 10px;
+                left: 0;
+            }
+
+            .activity .dot {
+                top: 9px;
+            }
         </style>
 
 
@@ -55,10 +78,10 @@
                     </div>
                 </li>
 
-                <li><a href="#" class="no-child"><i class="ion-android-sync"></i> Sync</a></li>
+                <li><a href="#" ng-click="sync()" class="no-child"><i class="ion-android-sync"></i> Sync</a></li>
                 <li><a href="#" ng-click="ref()" class="no-child"><i class="ion-shuffle"></i> Refresh</a></li>
 
-                <li><a href="#" class="no-child"><i class="ion-android-exit"></i> Logout</a></li>
+                <li><a href="#" ng-click="logout()" class="no-child"><i class="ion-android-exit"></i> Logout</a></li>
             </ul>
             <!-- End of Sidebars -->
 
@@ -116,12 +139,10 @@
                                         </div>
                                         <p>
                                             #{{ booking.id}} - {{booking.rnum}}
+                                            <i class="ion-log-in circle pull-right"  ng-click="checkin(booking.id)"></i>
                                         </p>
                                         <span>{{booking.mname}}</span>
-                                        <div class="friends">
-                                            <i class="ion-log-in circle" ng-click="checkin(booking.id)"></i> 
 
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -139,12 +160,12 @@
                                         </div>
                                         <p class="{{ booking.via == 1 ? 'vred' : '' }}">
                                             #{{ booking.id}} - {{booking.rnum}}
+                                            <i class="ion-log-out circle" ng-if="booking.via == 1" ng-click="scheckout(booking.id, booking.checkin_time)"></i> 
+                                            <i class="ion-log-out circle" ng-if="booking.via != 1" ng-click="ncheckout(booking.id)"></i> 
+
                                         </p>
                                         <span>{{booking.mname}}</span>
-                                        <div class="friends">
-                                            <i class="ion-log-out circle" ng-if="booking.via == 1" ng-click="scheckout(booking.id,booking.checkin_time)"></i> 
-                                            <i class="ion-log-out circle" ng-if="booking.via != 1" ng-click="ncheckout(booking.id)"></i> 
-                                        </div>
+
                                     </div>
 
                                 </div>
@@ -164,12 +185,12 @@
                                         </div>
                                         <p>
                                             #{{ booking.id}} - {{booking.rnum}}
-                                        </p>
-                                        <span>{{booking.mname}}</span>
-                                        <div class="friends">
                                             <i ng-click="minout(booking.id, 1)" class="ion-log-in circle" ng-if="booking.checkin_time < booking.checkout_time"></i> 
                                             <i ng-click="minout(booking.id, 2)" class="ion-log-out circle" ng-if="booking.checkin_time > booking.checkout_time"></i>
-                                        </div>
+
+                                        </p>
+                                        <span>{{booking.mname}}</span>
+
                                     </div>
 
                                 </div>

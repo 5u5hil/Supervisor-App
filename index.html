@@ -21,10 +21,26 @@
         <link href="css/pace-theme-center-circle.css" rel="stylesheet" type="text/css"/>
 
         <style>
+            html {
+                position: relative;
+                min-height: 100%;
+            }
+            footer {
+                display:none;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                height: auto;
+                width: 100%;
+            }
+            .open-left{
+                width: 30px;
+            }
             .meh {
                 margin-top: 70px;
                 margin-left: 15px;
                 margin-right: 45px;
+                width: 70%;
             }
 
             .floating-button.animated.bouncein.delay-3 {
@@ -54,6 +70,10 @@
 
             .activity .dot {
                 top: 9px;
+            }
+
+            .ion-search {
+                font-size: 30px !important;
             }
         </style>
 
@@ -122,8 +142,8 @@
 
                     <div class="p-t-20">
                         <ul class="tabs">
-                            <li class="tab"><a class="active ftest1" href="#test1">Upcoming</a></li>
-                            <li class="tab"><a class="ftest2" href="#test2">In the Lot</a></li>
+                            <li class="tab"><a class="active ftest1" href="#test1">Checkins</a></li>
+                            <li class="tab"><a class="ftest2" href="#test2">Checkouts</a></li>
                             <li class="tab"><a class="ftest3" href="#test3">Monthly</a></li>
 
                         </ul>
@@ -155,7 +175,7 @@
                                 <div class="col">
 
                                     <div data-vehicle-number="{{booking.rnum}}" data-booking-id="{{booking.id}}" ng-if="booking.bstatus == 2 && booking.btype != 3" class="contact" ng-repeat="booking in bookings">
-                                        <span class="date">{{ booking.stime}}</span>
+                                        <span class="date">{{ booking.checkin_time | timestampToISO  | date:'h:mm a'}}</span>
                                         <div class="dot z-depth-1 {{ (booking.ptype == 2 && booking.pstatus == 1) ? 'prepaid' : 'postpaid'}}">
                                         </div>
                                         <p class="{{ booking.via == 1 ? 'vred' : '' }}">
@@ -224,13 +244,13 @@
                 <form id="addBooking">
                     <div class="input-field">
                         <i class="ion-iphone prefix"></i> 
-                        <input class="validate" id="mobile" type="text" name="mobile"> 
+                        <input class="validate" id="mobile" type="number" oninput="maxLengthCheck(this)"  name="mobile"> 
                         <label for="mobile" class="">Mobile Number</label>
                     </div>
 
                     <div class="input-field">
                         <i class="ion-model-s prefix"></i> 
-                        <input class="validate" id="rnum" type="text" name="vechicle_no"> 
+                        <input class="validate" id="rnum" type="text" name="vechicle_no" oninput="maxLengthCheck(this)"> 
                         <label for="rnum">Registration Number</label>
                     </div>
 

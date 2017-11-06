@@ -26,6 +26,14 @@ $(document).ready(function () {
 });
 
 
+function maxLengthCheck(object)
+{
+    if (object.value.length > 10) {
+        object.value = object.value.slice(0, 10);
+    }
+}
+
+
 
 function toast(msg) {
 
@@ -88,3 +96,20 @@ function isJson(item) {
 
     return false;
 }
+
+function footerAlign() {
+    $('footer').css('display', 'block');
+    $('footer').css('height', 'auto');
+    var footerHeight = $('footer').outerHeight();
+    $('body').css('padding-bottom', footerHeight);
+    $('footer').css('height', footerHeight);
+}
+
+
+$(document).ready(function () {
+    footerAlign();
+});
+
+$(window).resize(function () {
+    footerAlign();
+});

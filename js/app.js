@@ -1,5 +1,14 @@
 var app = angular.module("occupyparking", ['ngSanitize']);
 
+
+
+app.filter('timestampToISO', function() {
+    return function(input) {
+        input = new Date(input).toISOString();
+        return input;
+    };
+});
+
 app.controller("homeCtrl", function ($scope, $http, $interval) {
 
 
@@ -12,7 +21,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
 
 
     $interval(function () {
-        // refresh();
+         refresh();
     }, 20000)
 
 
@@ -57,7 +66,10 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
                 data: data,
                 success: function (res) {
 
-                    toast(res);
+                    alert(res[0]);
+                    data.famt = res[1];
+                    data.fcharge = res[2];
+                    data.discount = res[3];
                     var r = confirm("Confirm Checkout?");
                     if (r == true) {
                         $.ajax({
@@ -354,8 +366,8 @@ $(document).ready(function () {
             $(".contact[data-booking-id='" + sterm + "']").show();
             $(".f" + $(".contact[data-booking-id='" + sterm + "']").parent().parent().parent().parent().attr('id')).click()
 
-            $(".contact[data-vehicle-number*='" + sterm + "']").show();
-            $(".f" + $(".contact[data-vehicle-number*='" + sterm + "']").parent().parent().parent().parent().attr('id')).click()
+            $(".contact[data-vehicle-number*='" + sterm + "' i]").show();
+            $(".f" + $(".contact[data-vehicle-number*='" + sterm + "' i]").parent().parent().parent().parent().attr('id')).click()
 
 
         }

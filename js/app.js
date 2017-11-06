@@ -2,8 +2,8 @@ var app = angular.module("occupyparking", ['ngSanitize']);
 
 
 
-app.filter('timestampToISO', function() {
-    return function(input) {
+app.filter('timestampToISO', function () {
+    return function (input) {
         input = new Date(input).toISOString();
         return input;
     };
@@ -21,7 +21,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
 
 
     $interval(function () {
-         refresh();
+        refresh();
     }, 20000)
 
 
@@ -322,14 +322,19 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
             var toSync = get('toSync');
 
             for (var i = toSync.length - 1; i >= 0; i--) {
-                $.ajax({
-                    url: toSync[i].url,
-                    type: toSync[i].type,
-                    data: toSync[i].data,
-                    success: function (data) {
-                        toSync.splice(i, 1);
-                    }
-                });
+
+
+                var request = new XMLHttpRequest();
+                request.open(toSync[i].type, toSync[i].url, false);  // `false` makes the request synchronous
+                request.send(toSync[i].data);
+
+                if (request.status === 200) {
+                    toSync.splice(i, 1);
+                }
+
+
+
+
             }
 
             set('toSync', toSync);

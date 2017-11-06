@@ -113,3 +113,7 @@ $(document).ready(function () {
 $(window).resize(function () {
     footerAlign();
 });
+
+$( document ).ajaxError(function() {
+ toast("Oops ... looks like something went wrong");
+});

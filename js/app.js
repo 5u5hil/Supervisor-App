@@ -128,7 +128,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
         var hDiff = hourDiff / 3600 / 1000; //in hours
         var humanReadable = {};
         humanReadable.hours = Math.floor(hDiff);
-        humanReadable.minutes = minDiff - 60 * humanReadable.hours;
+        humanReadable.minutes = Math.ceil(minDiff - 60 * humanReadable.hours);
 
 
 

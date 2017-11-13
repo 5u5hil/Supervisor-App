@@ -9,9 +9,9 @@ app.filter('timestampToISO', function () {
     };
 });
 
-app.controller("homeCtrl", function ($scope, $http, $interval) {
+app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
-
+    $scope.isDisabled = false;
 
     $scope.user = get('user')
 
@@ -38,7 +38,19 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
                 success: function (data) {
                     $scope.$applyAsync(function () {
                         $scope.bookings = data;
+                        if ($("input[name='search']").val() != "") {
+                            $timeout(function () {
+                                var e = $.Event('keyup');
+                                e.keyCode = 13; // enter
+                                $("input[name='search']").trigger(e);
+                            }, 100);
+
+                        }
                     });
+
+
+
+
                     set("bookings", {lastSync: new Date(), data: data});
                 }
             });
@@ -171,6 +183,8 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
 
                 }
             }
+        } else {
+            toast("Please enter the amount collected.");
         }
 
 
@@ -271,6 +285,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
 
 
     $scope.addBooking = function () {
+
         var data = $("#addBooking").serialize();
         var url = apiEndpoint + 'addBooking';
         var type = 'POST';
@@ -284,6 +299,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
 
         var r = confirm("Confirm Booking?");
         if (r == true) {
+            $scope.isDisabled = true;
 
             if (online()) {
                 $.ajax({
@@ -291,7 +307,10 @@ app.controller("homeCtrl", function ($scope, $http, $interval) {
                     type: type,
                     data: data,
                     success: function (data) {
+                        $scope.isDisabled = false;
                         if (data == 'Booking added') {
+
+                            refresh();
                             toast("Booking Added.");
                             $('.modal-close').click();
                             $('#addBooking').each(function () {

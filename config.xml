@@ -28,5 +28,8 @@
     <platform name="android" />
     
     <gap:plugin name="cordova-plugin-x-toast" source="npm" />
+    
+    <icon src="icon.png" />
+    <splash src="splash.png" />
 
 </widget>

@@ -45,7 +45,7 @@
 
             .floating-button.animated.bouncein.delay-3 {
                 text-align: right;
-                margin: -60px 10px 0px;
+                margin: -50px 20px 0px;
                 float: right;
             }
 
@@ -105,7 +105,7 @@
                         <div class="nav-avatar">
                             <img class="circle avatar" src="img/user.png" alt="">
                             <div class="avatar-body">
-                                <h3>Hello</h3>
+                                <h3>Howdy!</h3>
                                 <p>{{ user.display_name}}</p>
                             </div>
                         </div>
@@ -137,8 +137,8 @@
                 <div class="animated fadeinup" >
                     <div class=" animated fadeindown " >
                         <div class="input-field meh">
-                            <i class="ion-search prefix"></i> 
-                            <input class="validate" id="search" type="text" name="search" placeholder="Search"> 
+                            <!-- <i class="ion-search prefix"></i> -->
+                            <input class="validate" id="search" type="text" name="search" placeholder="Search Vehicle Number"> 
                         </div>
                         <div class="">   
 
@@ -258,22 +258,22 @@
                 <form id="addBooking">
                     <div class="input-field">
                         <i class="ion-iphone prefix"></i> 
-                        <input class="validate" id="mobile" type="number" oninput="maxLengthCheck(this)"  name="mobile" placeholder="Mobile Number"> 
+                        <input class="validate" id="mobile" type="number" oninput="maxLengthCheck(this)"  name="mobile" placeholder="Mobile Number" style="text-transform: uppercase;"> 
                     </div>
 
                     <div class="input-field" style="margin-top: 0;">
                         <i class="ion-model-s prefix"></i> 
-                        <input class="validate" id="rnum" type="text" placeholder="Registration Number" name="vechicle_no" oninput="maxLengthCheck(this)"> 
+                        <input class="validate" id="rnum" type="text" placeholder="Registration Number" name="vechicle_no" oninput="maxLengthCheck(this)" style="text-transform: uppercase;"> 
                     </div>
 
                     <div style="margin-bottom:20px;">
 
 
                         <input name="term" type="radio" id="fwow" value="4" checked/>
-                        <label for="fwow">4 Wheeler</label> 
+                        <label for="fwow" style="padding-right:20px;">4 WHEELER</label> 
 
                         <input name="term" type="radio" id="twow"  value="3" />
-                        <label for="twow">2 Wheeler</label>
+                        <label for="twow">2 WHEELER</label>
 
                         <input type="hidden" name="userId" value="{{ user.ID}}" />
                         <input type="hidden" name="via" value="1" />
@@ -281,12 +281,12 @@
 
                     </div>
                 </form>
-                <button ng-disabled="isDisabled" class="waves-effect waves-light btn-large accent-color width-100 m-b-20 animated bouncein delay-4" id="addBooking" ng-click="addBooking()">Add Booking</button>
+                <button ng-disabled="isDisabled" class="waves-effect waves-light btn-large accent-color width-100  animated bouncein delay-4" id="addBooking" ng-click="addBooking()">Add Booking</button>
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button class="modal-action modal-close waves-effect waves-green btn-flat pull-left">Cancel</button>
 
-            </div>
+            </div>-->
         </div>
         <script src="cordova.js"></script>
 

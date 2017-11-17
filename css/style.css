@@ -21,7 +21,7 @@ Primary use: App & Mobile Website
 body {
     font-family: 'Open Sans', sans-serif;
     background: #fff;
-    color: #76838f;
+    color: #777;
     overflow-x: hidden;
 }
 [class^="mdi-"],
@@ -156,7 +156,7 @@ blockquote {
     color: #FF4081 !important;
 }
 .accent-color {
-    background-color: #FF4081 !important;
+    background-color: #ff652f !important;
 }
 .accent-border {
     border-color: #FF4081 !important;
@@ -888,15 +888,15 @@ footer.page-footer {
 
 .tabs .tab a,
 .tabs .tab a:hover {
-    color: #2196F3;
-    opacity: 0.6;
+    color: #222;
+    opacity: 0.5;
 }
 .tabs .tab a.active {
-    color: #2196F3;
+    color: #1ac897;
     opacity: 1;
 }
 .tabs .indicator {
-    background-color: #2196F3;
+    background-color: #1ac897;
 }
 /* Searchbar */
 
@@ -929,7 +929,7 @@ input[type=number]:focus:not([readonly])+label,
 input[type=search]:focus:not([readonly])+label,
 textarea.materialize-textarea:focus:not([readonly])+label,
 .input-field .prefix.active {
-    color: #2196F3;
+    color: #1ac897;
 }
 input[type=text]:focus:not([readonly]),
 input[type=password]:focus:not([readonly]),
@@ -942,12 +942,12 @@ input[type=tel]:focus:not([readonly]),
 input[type=number]:focus:not([readonly]),
 input[type=search]:focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]) {
-    border-bottom: 1px solid #2196F3;
-    box-shadow: 0 1px 0 0 #2196F3;
+    border-bottom: 1px solid #1ac897;
+    box-shadow: 0 1px 0 0 #1ac897;
 }
 [type="radio"]:checked+label:after {
-    border: 2px solid #2196F3;
-    background-color: #2196F3;
+    border: 2px solid #1ac897;
+    background-color: #1ac897;
 }
 [type="checkbox"]:checked+label:before {
     border-right: 2px solid #2196F3;
@@ -1955,7 +1955,7 @@ ul.faq {
 }
 .contact p {
     margin: 1px 0 0;
-    color: #37474f;
+    color: #222;
 }
 .contact span {
     font-size: 12px;
@@ -1978,7 +1978,7 @@ ul.faq {
     top: 50px;
     left: 33px;
     border-radius: 50%;
-    border: 4px solid #2196F3;
+    border: 4px solid #aaa;
 }
 /* Activity */
 
@@ -2243,7 +2243,7 @@ ul.faq {
 .tool-signup {
     position: absolute;
     top: 0;
-    height: 180px !important;
+    height: 165px !important;
 }
 .login-avatar,
 .signup-avatar {
@@ -2266,7 +2266,7 @@ ul.faq {
     border-radius: 2px;
     background-color: #fff;
     position: absolute;
-    top: 56px;
+    top: 100px;
     left: 0;
     right: 0;
     z-index: 99;
@@ -2454,13 +2454,13 @@ span.data-color {
 
 
 .prepaid{
-    background-color: #66f55a !important;
+    background-color: #27e816!important;
 }
 
 .postpaid{
-    background-color: #ff000f !important;
+    background-color: #e20d1a!important;
 }
 
 .vred{
-color : #b34a4a !important;
+color : #c50202!important;
 }

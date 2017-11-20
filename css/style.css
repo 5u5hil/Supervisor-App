@@ -21,7 +21,7 @@ Primary use: App & Mobile Website
 body {
     font-family: 'Open Sans', sans-serif;
     background: #fff;
-    color: #777;
+    color: #555;
     overflow-x: hidden;
 }
 [class^="mdi-"],
@@ -525,6 +525,7 @@ blockquote {
 
 footer.page-footer {
     margin-top: 0;
+    height: 50px!important;
 }
 .footer-copyright .right > i {
     margin-left: 10px;
@@ -1214,8 +1215,8 @@ li.your-comment {
 /* Activity */
 
 .activity {
-    margin: 0 20px;
-    padding: 20px 0;
+    margin: 0 30px;
+    padding: 20px 0 0px 0;
     border-bottom: 1px solid #eee;
     position: relative;
 }
@@ -1955,7 +1956,8 @@ ul.faq {
 }
 .contact p {
     margin: 1px 0 0;
-    color: #222;
+    color: #444;
+    font-weight:600;
 }
 .contact span {
     font-size: 12px;

@@ -37,7 +37,7 @@
                 width: 30px;
             }
             .meh {
-                margin-top: 70px;
+                margin-top: 63px;
                 margin-left: 15px;
                 margin-right: 45px;
                 width: 70%;
@@ -45,7 +45,7 @@
 
             .floating-button.animated.bouncein.delay-3 {
                 text-align: right;
-                margin: -50px 20px 0px;
+                margin: -40px 10px 0px;
                 float: right;
             }
 
@@ -59,7 +59,7 @@
             }
             .contact {
                 position: relative;
-                padding: 5px 16px 0px 65px;
+                padding: 5px 20px 0px 65px;
             }
 
             .activity .date {
@@ -138,14 +138,14 @@
                     <div class=" animated fadeindown " >
                         <div class="input-field meh">
                             <!-- <i class="ion-search prefix"></i> -->
-                            <input class="validate" id="search" type="text" name="search" placeholder="Search Vehicle Number"> 
+                            <input class="validate" id="search" type="text" name="search" placeholder="Search here..."> 
                         </div>
                         <div class="">   
 
                             <div class="floating-button animated bouncein delay-3">
 
                                 <span class="btn-floating resize btn-large waves-effect waves-light accent-color btn z-depth-1  modal-trigger" href="#modal1">
-                                    <i class="ion-plus"></i>
+                                    <i class="ion-plus-round"></i>
                                 </span>
                             </div>
 
@@ -155,15 +155,15 @@
 
                     <div class="p-t-20">
                         <ul class="tabs">
-                            <li class="tab"><a class="active ftest1" href="#test1">Checkins</a></li>
-                            <li class="tab"><a class="ftest2" href="#test2">Checkouts</a></li>
+                            <li class="tab"><a class="active ftest1" href="#test1">Check-in</a></li>
+                            <li class="tab"><a class="ftest2" href="#test2">Check-out</a></li>
                             <li class="tab"><a class="ftest3" href="#test3">Monthly</a></li>
 
                         </ul>
                     </div>
 
                     <div id="test1">
-                        <div class="container activity p-l-r-20">
+                        <div class="container activity">
                             <div class="row m-l-0">
                                 <div class="col">
                                     <div data-vehicle-number="{{booking.rnum}}" data-booking-id="{{booking.id}}" ng-if="booking.bstatus == 1 && booking.btype != 3" class="contact" ng-repeat="booking in bookings">
@@ -171,10 +171,10 @@
                                         <div class="dot z-depth-1 {{ (booking.ptype == 2 && booking.pstatus == 1) ? 'prepaid' : 'postpaid'}}">
                                         </div>
                                         <p>
-                                            #{{ booking.id}} - {{booking.rnum}}
-                                            <i class="ion-log-in circle pull-right"  ng-click="checkin(booking.id)"></i>
+                                            {{booking.rnum}}
+                                            <i class="ion-log-out pull-right"  ng-click="checkin(booking.id)"></i>
                                         </p>
-                                        <span>{{booking.mname}}</span>
+                                        <span>#{{booking.id}} {{booking.mname}} </span>
 
                                     </div>
                                 </div>
@@ -183,7 +183,7 @@
                     </div>
 
                     <div id="test2">
-                        <div class="container activity p-l-r-20">
+                        <div class="container activity ">
                             <div class="row m-l-0">
                                 <div class="col">
 
@@ -192,12 +192,12 @@
                                         <div class="dot z-depth-1 {{ (booking.ptype == 2 && booking.pstatus == 1) ? 'prepaid' : 'postpaid'}}">
                                         </div>
                                         <p class="{{ booking.via == 1 ? 'vred' : '' }}">
-                                            #{{ booking.id}} - {{booking.rnum}}
+                                            {{booking.rnum}}
                                             <i class="ion-log-out circle" ng-if="booking.via == 1" ng-click="scheckout(booking.id, booking.checkin_time)"></i> 
                                             <i class="ion-log-out circle" ng-if="booking.via != 1" ng-click="ncheckout(booking.id)"></i> 
 
                                         </p>
-                                        <span>{{booking.mname}}</span>
+                                        <span>#{{booking.id}} {{booking.mname}} </span>
 
                                     </div>
 
@@ -208,7 +208,7 @@
 
 
                     <div id="test3">
-                        <div class="container activity p-l-r-20">
+                        <div class="container activity">
                             <div class="row m-l-0">
                                 <div class="col">
 
@@ -217,12 +217,12 @@
                                         <div class="dot z-depth-1">
                                         </div>
                                         <p>
-                                            #{{ booking.id}} - {{booking.rnum}}
+                                            {{booking.rnum}}
                                             <i ng-click="minout(booking.id, 1)" class="ion-log-in circle" ng-if="booking.checkin_time < booking.checkout_time"></i> 
                                             <i ng-click="minout(booking.id, 2)" class="ion-log-out circle" ng-if="booking.checkin_time > booking.checkout_time"></i>
 
                                         </p>
-                                        <span>{{booking.mname}}</span>
+                                        <span>#{{booking.id}} {{booking.mname}} </span>
 
                                     </div>
 
@@ -257,16 +257,16 @@
                 <h4>Add New Booking</h4>
                 <form id="addBooking">
                     <div class="input-field">
-                        <i class="ion-iphone prefix"></i> 
+                        <!--<i class="ion-iphone prefix"></i> -->
                         <input class="validate" id="mobile" type="number" oninput="maxLengthCheck(this)"  name="mobile" placeholder="Mobile Number" style="text-transform: uppercase;"> 
                     </div>
 
                     <div class="input-field" style="margin-top: 0;">
-                        <i class="ion-model-s prefix"></i> 
-                        <input class="validate" id="rnum" type="text" placeholder="Registration Number" name="vechicle_no" oninput="maxLengthCheck(this)" style="text-transform: uppercase;"> 
+                        <!--<i class="ion-model-s prefix"></i> -->
+                        <input class="validate" id="rnum" type="text" placeholder="Vehicle Number" name="vechicle_no" oninput="maxLengthCheck(this)" style="text-transform: uppercase;"> 
                     </div>
 
-                    <div style="margin-bottom:20px;">
+                    <div style="margin-bottom:15px;margin-top:15px;">
 
 
                         <input name="term" type="radio" id="fwow" value="4" checked/>

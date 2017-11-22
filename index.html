@@ -192,9 +192,11 @@
                                         <div class="dot z-depth-1 {{ (booking.ptype == 2 && booking.pstatus == 1) ? 'prepaid' : 'postpaid'}}">
                                         </div>
                                         <p class="{{ booking.via == 1 ? 'vred' : '' }}">
-                                            {{booking.rnum}}
+                                            {{booking.rnum}} 
+                                            <i class="ion-edit" ng-if="booking.via == 1" ng-click="editB(booking.id)"></i> &nbsp;
                                             <i class="ion-log-out circle" ng-if="booking.via == 1" ng-click="scheckout(booking.id, booking.checkin_time)"></i> 
                                             <i class="ion-log-out circle" ng-if="booking.via != 1" ng-click="ncheckout(booking.id)"></i> 
+                                           
 
                                         </p>
                                         <span>#{{booking.id}} {{booking.mname}} </span>

@@ -29,6 +29,8 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
         refresh();
     }
 
+    
+
     function refresh() {
         if (online()) {
             $.ajax({
@@ -367,6 +369,31 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
         window.localStorage.removeItem("user");
         window.location.href = 'login.html';
     }
+
+    $scope.editB = function(id){
+        console.log("hrter")
+        if (online()) {
+            $.ajax({
+                url: apiEndpoint + 'editBooking',
+                type: 'get',
+                data: {pid: get('user').parkingLot, id: id},
+                success: function (data) {
+                    $scope.$applyAsync(function () {
+                       console.log(data);
+                    });
+
+
+
+
+                }
+            });
+
+        } else {
+            alert("No Internet Connection. Please try again once connected back to the internet.");
+            
+        }
+    }
+
 
 });
 

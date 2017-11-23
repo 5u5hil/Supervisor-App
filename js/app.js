@@ -284,6 +284,55 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
     }
 
+    $scope.updateBooking = function(){
+        var data = $("#editBooking").serialize();
+        var url = apiEndpoint + 'updateBooking';
+        var type = 'POST';
+
+        if ($("#editBooking [name='vechicle_no'").val() == '') {
+            toast("Please Enter all the details.");
+            return false;
+        }
+        var r = confirm("Confirm Edit?");
+        if (r == true) {
+            $scope.isDisabled = true;
+
+            if (online()) {
+                $.ajax({
+                    url: url,
+                    type: type,
+                    data: data,
+                    success: function (data) {
+                        $scope.isDisabled = false;
+                        if (data == 'Booking updated') {
+
+                            refresh();
+                            toast("Booking Updated.");
+                            $("#modal2").closeModal();
+                            $('#editBooking').each(function () {
+                                this.reset();
+                            });
+                        } else {
+                            toast(data);
+                        }
+                    }
+                });
+
+            } else {
+                alert("No Internet Connection. Please click the sync button once connected back to the internet.");
+
+                if (get('toSync') == null || !isArray(get('toSync')))
+                    set("toSync", JSON.stringify([]));
+
+                var toSync = get('toSync');
+                toSync.push({url: url, data: data, type: type, pushedOn: new Date()});
+                set('toSync', toSync);
+
+            }
+        }
+
+
+    }
 
 
     $scope.addBooking = function () {
@@ -371,20 +420,16 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
     }
 
     $scope.editB = function(id){
-        console.log("hrter")
+        $scope.bid = id;
         if (online()) {
             $.ajax({
                 url: apiEndpoint + 'editBooking',
                 type: 'get',
                 data: {pid: get('user').parkingLot, id: id},
                 success: function (data) {
-                    $scope.$applyAsync(function () {
-                       console.log(data);
-                    });
-
-
-
-
+                    
+                        $("#modal2").openModal()
+                  
                 }
             });
 

@@ -147,7 +147,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
 
 
-        var amt = prompt("Total Parked Time : " + humanReadable.hours + " Hours " + humanReadable.minutes + " Mins. Enter Amount Collected", "");
+        var amt = prompt("Total Parked Time : " + humanReadable.hours + " Hours " + humanReadable.minutes + " Mins. \nEnter Amount Collected", "");
 
         if (amt != null) {
 
@@ -348,7 +348,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
 
 
-        var r = confirm("Confirm Booking?");
+        var r = confirm("Phone No : "+ $("[name='mobile'").val() +" \nRegistration No : "+ $("[name='vechicle_no'").val() +" \nYou'll not be allowed to edit the details. Confirm Booking?");
         if (r == true) {
             $scope.isDisabled = true;
 
@@ -363,7 +363,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
                             refresh();
                             toast("Booking Added.");
-                            $('.modal-close').click();
+                            $("#modal1").closeModal();
                             $('#addBooking').each(function () {
                                 this.reset();
                             });

@@ -138,7 +138,7 @@
                     <div class=" animated fadeindown " >
                         <div class="input-field meh">
                             <!-- <i class="ion-search prefix"></i> -->
-                            <input class="validate" id="search" type="number" name="search" placeholder="Search here..."> 
+                            <input class="validate" id="search" type="number" name="search" placeholder="Search here..." ng-model="rnum"> 
                         </div>
                         <div class="">   
 
@@ -265,7 +265,7 @@
 
                     <div class="input-field" style="margin-top: 0;">
                         <!--<i class="ion-model-s prefix"></i> -->
-                        <input class="validate" id="rnum" type="text" placeholder="Vehicle Number" name="vechicle_no" oninput="maxLengthCheck(this)" style="text-transform: uppercase;"> 
+                        <input class="validate" id="rnum" ng-model="rnum" type="text" placeholder="Vehicle Number" name="vechicle_no" oninput="maxLengthCheck(this)" style="text-transform: uppercase;"> 
                     </div>
 
                     <div style="margin-bottom:15px;margin-top:15px;">

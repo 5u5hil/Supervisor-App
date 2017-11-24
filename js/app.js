@@ -367,6 +367,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                             $('#addBooking').each(function () {
                                 this.reset();
                             });
+                            $scope.rnum = "";
                         } else {
                             toast(data);
                         }

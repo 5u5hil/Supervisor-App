@@ -37,16 +37,7 @@ function maxLengthCheck(object)
 
 function toast(msg) {
 
-    try {
-        window.plugins.toast.show(msg, 'short', 'center', function (a) {
-            console.log('toast success: ' + a)
-        }, function (b) {
-            alert('toast error: ' + b)
-        })
-
-    } catch (err) {
-        alert(msg);
-    }
+    alert(msg);
 
 }
 
@@ -114,6 +105,6 @@ $(window).resize(function () {
     footerAlign();
 });
 
-$( document ).ajaxError(function() {
- toast("Oops ... looks like something went wrong");
+$(document).ajaxError(function () {
+    toast("Oops ... looks like something went wrong");
 });

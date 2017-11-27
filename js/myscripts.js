@@ -37,7 +37,16 @@ function maxLengthCheck(object)
 
 function toast(msg) {
 
-    alert(msg);
+    try {
+        window.plugins.toast.show(msg, 'long', 'bottom', function (a) {
+            console.log('toast success: ' + a)
+        }, function (b) {
+            alert('toast error: ' + b)
+        })
+
+    } catch (err) {
+        alert(msg);
+    }
 
 }
 

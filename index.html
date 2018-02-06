@@ -194,8 +194,8 @@
                                         <p class="{{ booking.via == 1 ? 'vred' : '' }}">
                                             {{booking.rnum}} 
                                             <!-- <i class="ion-edit" ng-if="booking.via == 1" ng-click="editB(booking.id)"></i> &nbsp; -->
-                                            <i class="ion-log-out circle" ng-if="booking.via == 1" ng-click="scheckout(booking.id, booking.checkin_time)"></i> 
-                                            <i class="ion-log-out circle" ng-if="booking.via != 1" ng-click="ncheckout(booking.id)"></i> 
+                                            <!-- <i class="ion-log-out circle" ng-if="booking.via == 1" ng-click="scheckout(booking.id, booking.checkin_time)"></i>--> 
+                                            <i class="ion-log-out circle" ng-click="ncheckout(booking.id)"></i> 
                                            
 
                                         </p>

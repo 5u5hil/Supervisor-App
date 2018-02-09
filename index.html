@@ -196,7 +196,7 @@
                                             <!-- <i class="ion-edit" ng-if="booking.via == 1" ng-click="editB(booking.id)"></i> &nbsp; -->
                                             <!-- <i class="ion-log-out circle" ng-if="booking.via == 1" ng-click="scheckout(booking.id, booking.checkin_time)"></i>--> 
                                             <i class="ion-log-out circle" ng-click="ncheckout(booking.id)"></i> 
-                                           
+
 
                                         </p>
                                         <span>#{{booking.id}} {{booking.mname}} </span>
@@ -258,6 +258,10 @@
             <div class="modal-content">
                 <h4>Add New Booking</h4>
                 <form id="addBooking">
+                   
+                   
+
+
                     <div class="input-field">
                         <!--<i class="ion-iphone prefix"></i> -->
                         <input class="validate" id="mobile" type="number" oninput="maxLengthCheck(this)"  name="mobile" placeholder="Mobile Number" style="text-transform: uppercase;"> 
@@ -271,6 +275,9 @@
                     <div style="margin-bottom:15px;margin-top:15px;">
 
 
+
+
+
                         <input name="term" type="radio" id="fwow" value="4" checked/>
                         <label for="fwow" style="padding-right:20px;">4 WHEELER</label> 
 
@@ -281,6 +288,13 @@
                         <input type="hidden" name="via" value="1" />
                         <input type="hidden" name="pid" value="{{ user.parkingLot}}" />
 
+                    </div>
+                     <div ng-if="user.is_madd == '1'" style="margin-top:15px;margin-bottom:15px;">
+                        <input name="btype" type="radio" id="fbtype" value="1" checked/>
+                        <label for="fbtype" style="padding-right:20px;">Hourly</label> 
+
+                        <input name="btype" type="radio" id="tbtype"  value="3" />
+                        <label for="tbtype">Monthly</label>
                     </div>
                 </form>
                 <button ng-disabled="isDisabled" class="waves-effect waves-light btn-large accent-color width-100  animated bouncein delay-4" id="addBooking" ng-click="addBooking()">Add Booking</button>
@@ -293,9 +307,9 @@
 
         <div id="modal2" class="modal">
             <div class="modal-content">
-                <h4>Edit Booking #{{ bid }}</h4>
+                <h4>Edit Booking #{{ bid}}</h4>
                 <form id="editBooking">
-                   
+
 
                     <div class="input-field" style="margin-top: 0;">
                         <!--<i class="ion-model-s prefix"></i> -->
@@ -303,8 +317,8 @@
                     </div>
 
                     <div style="margin-bottom:15px;margin-top:15px;">
-                    <input type="hidden" name="bid" value="{{ bid }}" />
-                      
+                        <input type="hidden" name="bid" value="{{ bid}}" />
+
 
                     </div>
                 </form>

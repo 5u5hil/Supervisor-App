@@ -29,7 +29,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
         refresh();
     }
 
-    
+
 
     function refresh() {
         if (online()) {
@@ -284,7 +284,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
     }
 
-    $scope.updateBooking = function(){
+    $scope.updateBooking = function () {
         var data = $("#editBooking").serialize();
         var url = apiEndpoint + 'updateBooking';
         var type = 'POST';
@@ -338,7 +338,8 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
     $scope.addBooking = function () {
 
         var data = $("#addBooking").serialize();
-        var url = apiEndpoint + 'addBooking';
+
+        var url = apiEndpoint + ($("[name='btype']:checked").val() == 3 ? 'addMBooking' : 'addBooking');
         var type = 'POST';
 
         if ($("[name='mobile'").val() == '' || $("[name='vechicle_no'").val() == '') {
@@ -348,32 +349,92 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
 
 
-        var r = confirm("Phone No : "+ $("[name='mobile'").val() +" \nRegistration No : "+ $("[name='vechicle_no'").val() +" \nYou'll not be allowed to edit the details. Confirm Booking?");
+        var r = confirm("Phone No : " + $("[name='mobile'").val() + " \nRegistration No : " + $("[name='vechicle_no'").val() + " \nYou'll not be allowed to edit the details. Confirm Booking?");
         if (r == true) {
             $scope.isDisabled = true;
 
             if (online()) {
-                $.ajax({
-                    url: url,
-                    type: type,
-                    data: data,
-                    success: function (data) {
-                        $scope.isDisabled = false;
-                        if (data == 'Booking added') {
 
-                            refresh();
-                            toast("Booking Added.");
-                            $("#modal1").closeModal();
-                            $('#addBooking').each(function () {
-                                this.reset();
-                            });
-                            $scope.rnum = "";
-                        } else {
-                            toast(data);
+
+                if ($("[name='btype']:checked").val() == '3') {
+                    $.ajax({
+                        url: url,
+                        type: type,
+                        data: data + '&getstatus=cost',
+                        success: function (data) {
+                            $scope.isDisabled = false;
+                            if (data.status === 0) {
+                                toast(data.msg);
+
+                            } else {
+                                //toast(data);
+                                var d = confirm("Check In : " + data.checkin_time + " \nCheck In : " + data['checkout_time'] + " \nFinal Amount : " + data['final_amt'] + " \nConfirm Booking?");
+                                if (d === true) {
+                                    $scope.isDisabled = true;
+                                    var data = $("#addBooking").serialize();
+                                    console.log(data);
+                                    if (online()) {
+                                        $.ajax({
+                                            url: url,
+                                            type: type,
+                                            data: data,
+                                            success: function (result) {
+                                                $scope.isDisabled = false;
+                                                if (result === 'Booking added') {
+                                                    refresh();
+                                                    toast("Booking Added.");
+                                                    $("#modal1").closeModal();
+                                                    $('#addBooking').each(function () {
+                                                        this.reset();
+                                                    });
+                                                    $scope.rnum = "";
+                                                } else {
+                                                    toast(result);
+
+                                                }
+                                            }
+                                        });
+
+                                } else {
+                                    alert("No Internet Connection. Please click the sync button once connected back to the internet.");
+
+                                    if (get('toSync') == null || !isArray(get('toSync')))
+                                        set("toSync", JSON.stringify([]));
+
+                                    var toSync = get('toSync');
+                                    toSync.push({url: url, data: data, type: type, pushedOn: new Date()});
+                                    set('toSync', toSync);
+
+                                }
+                            }
                         }
                     }
-                });
+                    });
 
+
+                } else {
+
+                    $.ajax({
+                        url: url,
+                        type: type,
+                        data: data,
+                        success: function (data) {
+                            $scope.isDisabled = false;
+                            if (data == 'Booking added') {
+
+                                refresh();
+                                toast("Booking Added.");
+                                $("#modal1").closeModal();
+                                $('#addBooking').each(function () {
+                                    this.reset();
+                                });
+                                $scope.rnum = "";
+                            } else {
+                                toast(data);
+                            }
+                        }
+                    });
+                }
             } else {
                 alert("No Internet Connection. Please click the sync button once connected back to the internet.");
 
@@ -420,7 +481,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
         window.location.href = 'login.html';
     }
 
-    $scope.editB = function(id){
+    $scope.editB = function (id) {
         $scope.bid = id;
         if (online()) {
             $.ajax({
@@ -428,15 +489,15 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                 type: 'get',
                 data: {pid: get('user').parkingLot, id: id},
                 success: function (data) {
-                    
-                        $("#modal2").openModal()
-                  
+
+                    $("#modal2").openModal()
+
                 }
             });
 
         } else {
             alert("No Internet Connection. Please try again once connected back to the internet.");
-            
+
         }
     }
 

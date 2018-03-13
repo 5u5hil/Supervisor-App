@@ -1991,6 +1991,7 @@ ul.faq {
 }
 .activity .contact {
     margin-bottom: 20px;
+    text-transform:uppercase;
 }
 .activity .dot {
     width: 20px;

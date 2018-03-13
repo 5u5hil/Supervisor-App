@@ -337,6 +337,17 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
     $scope.addBooking = function () {
 
+        if($("#rnum").val().length < 8 ){
+            toast("Please enter valid Registration Number");
+            return;
+        }
+
+        if( $("#mobile").val().length <10){
+            toast("Please enter valid Mobile Number");
+            return;
+        }
+
+
         var data = $("#addBooking").serialize();
 
         var url = apiEndpoint + ($("[name='btype']:checked").val() == 3 ? 'addMBooking' : 'addBooking');

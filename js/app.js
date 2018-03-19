@@ -337,7 +337,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
     $scope.addBooking = function () {
 
-        if($("#rnum").val().length < 8 ){
+        if($("#rnum").val().length < 10 ){
             toast("Please enter valid Registration Number");
             return;
         }

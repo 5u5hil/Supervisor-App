@@ -105,7 +105,7 @@
                         <div class="nav-avatar">
                             <img class="circle avatar" src="img/user.png" alt="">
                             <div class="avatar-body">
-                                <h3>Howdy!</h3>
+                                <h3>Hello!</h3>
                                 <p>{{ user.display_name}}</p>
                             </div>
                         </div>
@@ -138,7 +138,7 @@
                     <div class=" animated fadeindown " >
                         <div class="input-field meh">
                             <!-- <i class="ion-search prefix"></i> -->
-                            <input class="validate" id="search" type="number" name="search" placeholder="Search here..." ng-model="rnum"> 
+                            <input class="validate" id="search" type="number" name="search" placeholder="SEARCH HERE..." ng-model="rnum"> 
                         </div>
                         <div class="">   
 
@@ -264,12 +264,12 @@
 
                     <div class="input-field">
                         <!--<i class="ion-iphone prefix"></i> -->
-                        <input class="validate" id="mobile" type="number" oninput="maxLengthCheck(this)"  name="mobile" placeholder="Mobile Number" style="text-transform: uppercase;"> 
+                        <input class="validate" id="mobile" type="number" oninput="maxLengthCheck(this)"  name="mobile" placeholder="Mobile Number (9867001155)" style="text-transform: uppercase;"> 
                     </div>
 
                     <div class="input-field" style="margin-top: 0;">
                         <!--<i class="ion-model-s prefix"></i> -->
-                        <input class="validate" id="rnum" ng-model="rnum" type="text" placeholder="Vehicle Number" name="vechicle_no" oninput="maxLengthCheck(this)" style="text-transform: uppercase;"> 
+                        <input class="validate" id="rnum" ng-model="rnum" type="text" placeholder="Vehicle Number (MH01AA1234)" name="vechicle_no" oninput="maxLengthCheck(this)" style="text-transform: uppercase;"> 
                     </div>
 
                     <div style="margin-bottom:15px;margin-top:15px;">
@@ -291,10 +291,10 @@
                     </div>
                      <div ng-if="user.is_madd == '1'" style="margin-top:15px;margin-bottom:15px;">
                         <input name="btype" type="radio" id="fbtype" value="1" checked/>
-                        <label for="fbtype" style="padding-right:20px;">Hourly</label> 
+                        <label for="fbtype" style="padding-right:20px;">HOURLY</label> 
 
                         <input name="btype" type="radio" id="tbtype"  value="3" />
-                        <label for="tbtype">Monthly</label>
+                        <label for="tbtype">MONTHLY</label>
                     </div>
                 </form>
                 <button ng-disabled="isDisabled" class="waves-effect waves-light btn-large accent-color width-100  animated bouncein delay-4" id="addBooking" ng-click="addBooking()">Add Booking</button>

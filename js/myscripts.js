@@ -1,5 +1,5 @@
-var domain = "http://occupyparking.boxcommerce.in/";
-var apiEndpoint = "http://occupyparking.boxcommerce.in/api/?method=";
+var domain = "http://op.clu.pw/";
+var apiEndpoint = "http://op.clu.pw/api/?method=";
 
 $(document).ready(function () {
 
@@ -26,8 +26,7 @@ $(document).ready(function () {
 });
 
 
-function maxLengthCheck(object)
-{
+function maxLengthCheck(object) {
     if (object.value.length > 10) {
         object.value = object.value.slice(0, 10);
     }
@@ -81,8 +80,8 @@ function isObject(a) {
 
 function isJson(item) {
     item = typeof item !== "string"
-            ? JSON.stringify(item)
-            : item;
+        ? JSON.stringify(item)
+        : item;
 
     try {
         item = JSON.parse(item);

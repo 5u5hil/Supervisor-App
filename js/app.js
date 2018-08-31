@@ -366,7 +366,6 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
             if (online()) {
 
-
                 if ($("[name='btype']:checked").val() == '3') {
                     $.ajax({
                         url: url,
@@ -374,8 +373,10 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                         data: data + '&getstatus=cost',
                         success: function (data) {
                             $scope.isDisabled = false;
+                            $scope.$digest();
                             if (data.status === 0) {
                                 toast(data.msg);
+                                
 
                             } else {
                                 //toast(data);
@@ -383,8 +384,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                                 if (d === true) {
                                     $scope.isDisabled = true;
                                     var data = $("#addBooking").serialize();
-                                    console.log(data);
-                                    if (online()) {
+                                   if (online()) {
                                         $.ajax({
                                             url: url,
                                             type: type,
@@ -430,7 +430,8 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                         type: type,
                         data: data,
                         success: function (data) {
-                            $scope.isDisabled = false;
+                            console.log(data)
+                          $scope.isDisabled = false;
                             if (data == 'Booking added') {
 
                                 refresh();
@@ -441,6 +442,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                                 });
                                 $scope.rnum = "";
                             } else {
+                                console.log("elsre")
                                 toast(data);
                             }
                         }

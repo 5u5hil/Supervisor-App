@@ -543,6 +543,7 @@ footer.page-footer {
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
 }
+
 .m-scene .fadein {
     -webkit-animation-name: fadeIn;
     animation-name: fadeIn;
@@ -640,10 +641,10 @@ footer.page-footer {
 #toolbar i {
     font-size: 24px;
     line-height: 56px;
-    color: #2b73ab;
+    color: #fff;
 }
 #toolbar .title {
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 300;
     color: #fff;
     line-height: 56px;
@@ -2264,11 +2265,11 @@ ul.faq {
 }
 .login-form,
 .signup-form {
-    padding: 20px;
+    padding: 0 20px;
     margin: 20px;
     border-radius: 2px;
     background-color: #fff;
-    position: absolute;
+    /* position: absolute; */
     top: 100px;
     left: 0;
     right: 0;
@@ -2480,4 +2481,16 @@ color : #c50202!important;
     text-transform: uppercase !important;
     font-weight: normal !important;
 
+}
+
+.logo {
+    padding: 20px 0;
+    min-height: 150px;
+    text-align: center;
+    margin-top: 20px;
+   
+}
+.logo img{
+   width: 100px;
+   display: inline;
 }

@@ -36,7 +36,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
             $.ajax({
                 url: apiEndpoint + 'getTodaysBookingsByLot',
                 type: 'get',
-                data: {pid: get('user').parkingLot},
+                data: { pid: get('user').parkingLot },
                 success: function (data) {
                     $scope.$applyAsync(function () {
                         $scope.bookings = data;
@@ -53,7 +53,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
 
 
-                    set("bookings", {lastSync: new Date(), data: data});
+                    set("bookings", { lastSync: new Date(), data: data });
                 }
             });
 
@@ -65,7 +65,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
     }
 
     $scope.ncheckout = function (oid) {
-        var data = {oid: oid, userId: get('user').ID, pid: get('user').parkingLot};
+        var data = { oid: oid, userId: get('user').ID, pid: get('user').parkingLot };
         var url = apiEndpoint + 'checkout';
         var type = 'POST';
 
@@ -105,7 +105,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                             }
                         });
                     }
-                    set("bookings", {lastSync: new Date(), data: $scope.bookings});
+                    set("bookings", { lastSync: new Date(), data: $scope.bookings });
                 }
             });
 
@@ -115,7 +115,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                 set("toSync", JSON.stringify([]));
 
             var toSync = get('toSync');
-            toSync.push({url: url, data: data, type: type, pushedOn: new Date()});
+            toSync.push({ url: url, data: data, type: type, pushedOn: new Date() });
             set('toSync', toSync);
 
         }
@@ -127,7 +127,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
     }
 
     $scope.scheckout = function (oid, time) {
-        var data = {oid: oid, userId: get('user').ID};
+        var data = { oid: oid, userId: get('user').ID };
         var url = apiEndpoint + 'scheckout';
         var type = 'POST';
 
@@ -170,7 +170,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                                     toast("Oops ... looks like something went wrong.")
                                 }
                             });
-                            set("bookings", {lastSync: new Date(), data: $scope.bookings});
+                            set("bookings", { lastSync: new Date(), data: $scope.bookings });
                         }
                     });
 
@@ -180,7 +180,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                         set("toSync", JSON.stringify([]));
 
                     var toSync = get('toSync');
-                    toSync.push({url: url, data: data, type: type, pushedOn: new Date()});
+                    toSync.push({ url: url, data: data, type: type, pushedOn: new Date() });
                     set('toSync', toSync);
 
                 }
@@ -196,7 +196,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
     $scope.checkin = function (oid) {
 
-        var data = {oid: oid, userId: get('user').ID};
+        var data = { oid: oid, userId: get('user').ID };
         var url = apiEndpoint + 'checkin';
         var type = 'POST';
 
@@ -219,7 +219,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                                 toast("Oops ... looks like something went wrong.")
                             }
                         });
-                        set("bookings", {lastSync: new Date(), data: $scope.bookings});
+                        set("bookings", { lastSync: new Date(), data: $scope.bookings });
                     }
                 });
 
@@ -230,7 +230,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                     set("toSync", JSON.stringify([]));
 
                 var toSync = get('toSync');
-                toSync.push({url: url, data: data, type: type, pushedOn: new Date()});
+                toSync.push({ url: url, data: data, type: type, pushedOn: new Date() });
                 set('toSync', toSync);
 
             }
@@ -242,7 +242,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
     $scope.minout = function (oid, otype) {
 
-        var data = {oid: oid, userId: get('user').ID, type: otype};
+        var data = { oid: oid, userId: get('user').ID, type: otype };
         var url = apiEndpoint + 'minout';
         var type = 'POST';
         var msg = otype == 1 ? 'Checkin Done' : 'Checkout Done';
@@ -264,7 +264,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
                             }
                         });
-                        set("bookings", {lastSync: new Date(), data: $scope.bookings});
+                        set("bookings", { lastSync: new Date(), data: $scope.bookings });
                     }
                 });
 
@@ -275,7 +275,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                     set("toSync", JSON.stringify([]));
 
                 var toSync = get('toSync');
-                toSync.push({url: url, data: data, type: type, pushedOn: new Date()});
+                toSync.push({ url: url, data: data, type: type, pushedOn: new Date() });
                 set('toSync', toSync);
 
             }
@@ -325,7 +325,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                     set("toSync", JSON.stringify([]));
 
                 var toSync = get('toSync');
-                toSync.push({url: url, data: data, type: type, pushedOn: new Date()});
+                toSync.push({ url: url, data: data, type: type, pushedOn: new Date() });
                 set('toSync', toSync);
 
             }
@@ -337,12 +337,12 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
     $scope.addBooking = function () {
 
-        if($("#rnum").val().length < 10 ){
+        if ($("#rnum").val().length < 10) {
             toast("Please enter valid Registration Number");
             return;
         }
 
-        if( $("#mobile").val().length <10){
+        if ($("#mobile").val().length < 10) {
             toast("Please enter valid Mobile Number");
             return;
         }
@@ -366,7 +366,6 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
             if (online()) {
 
-
                 if ($("[name='btype']:checked").val() == '3') {
                     $.ajax({
                         url: url,
@@ -374,8 +373,10 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                         data: data + '&getstatus=cost',
                         success: function (data) {
                             $scope.isDisabled = false;
+                            $scope.$digest();
                             if (data.status === 0) {
                                 toast(data.msg);
+
 
                             } else {
                                 //toast(data);
@@ -383,7 +384,6 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                                 if (d === true) {
                                     $scope.isDisabled = true;
                                     var data = $("#addBooking").serialize();
-                                    console.log(data);
                                     if (online()) {
                                         $.ajax({
                                             url: url,
@@ -406,20 +406,25 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                                             }
                                         });
 
-                                } else {
-                                    alert("No Internet Connection. Please click the sync button once connected back to the internet.");
+                                    } else {
+                                        alert("No Internet Connection. Please click the sync button once connected back to the internet.");
+                                        refresh();
+                                        $("#modal1").closeModal();
+                                        $('#addBooking').each(function () {
+                                            this.reset();
+                                        });
+                                        $scope.rnum = "";
+                                        if (get('toSync') == null || !isArray(get('toSync')))
+                                            set("toSync", JSON.stringify([]));
 
-                                    if (get('toSync') == null || !isArray(get('toSync')))
-                                        set("toSync", JSON.stringify([]));
+                                        var toSync = get('toSync');
+                                        toSync.push({ url: url, data: data, type: type, pushedOn: new Date() });
+                                        set('toSync', toSync);
 
-                                    var toSync = get('toSync');
-                                    toSync.push({url: url, data: data, type: type, pushedOn: new Date()});
-                                    set('toSync', toSync);
-
+                                    }
                                 }
                             }
                         }
-                    }
                     });
 
 
@@ -430,7 +435,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                         type: type,
                         data: data,
                         success: function (data) {
-                            $scope.isDisabled = false;
+                            console.log(data)
                             if (data == 'Booking added') {
 
                                 refresh();
@@ -441,6 +446,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                                 });
                                 $scope.rnum = "";
                             } else {
+                                console.log("elsre")
                                 toast(data);
                             }
                         }
@@ -448,12 +454,17 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                 }
             } else {
                 alert("No Internet Connection. Please click the sync button once connected back to the internet.");
-
+                refresh();
+                $("#modal1").closeModal();
+                $('#addBooking').each(function () {
+                    this.reset();
+                });
+               $scope.rnum = "";
                 if (get('toSync') == null || !isArray(get('toSync')))
                     set("toSync", JSON.stringify([]));
 
                 var toSync = get('toSync');
-                toSync.push({url: url, data: data, type: type, pushedOn: new Date()});
+                toSync.push({ url: url, data: data, type: type, pushedOn: new Date() });
                 set('toSync', toSync);
 
             }
@@ -498,7 +509,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
             $.ajax({
                 url: apiEndpoint + 'editBooking',
                 type: 'get',
-                data: {pid: get('user').parkingLot, id: id},
+                data: { pid: get('user').parkingLot, id: id },
                 success: function (data) {
 
                     $("#modal2").openModal()

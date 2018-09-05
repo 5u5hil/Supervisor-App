@@ -263,19 +263,26 @@
         <div id="modal1" class="modal">
             <div class="modal-content">
                 <h4>Add New Booking</h4>
-                <form id="addBooking">
+                <form id="addBooking" >
                    
                    
 
 
                     <div class="input-field">
                         <!--<i class="ion-iphone prefix"></i> -->
-                        <input class="validate" id="mobile" type="number" oninput="maxLengthCheck(this)"  name="mobile" placeholder="Mobile Number (9867001155)" style="text-transform: uppercase;"> 
+                        <label for="mobile" class="form-label active">Mobile Number (9867001155)</label>
+                        <input class="validate" id="mobile" type="number" oninput="maxLengthCheck(this)"  name="mobile" style="text-transform: uppercase;"> 
                     </div>
 
-                    <div class="input-field" style="margin-top: 0;">
+                    <div class="input-field vinput-field">
                         <!--<i class="ion-model-s prefix"></i> -->
-                        <input class="validate" id="rnum" ng-model="rnum" type="text" placeholder="Vehicle Number (MH01AA1234)" name="vechicle_no" oninput="maxLengthCheck(this)" style="text-transform: uppercase;"> 
+                        <!-- <input class="validate" id="rnum" ng-model="rnum" type="text" placeholder="Vehicle Number (MH01AA1234)" name="vechicle_no" oninput="maxLengthCheck(this)" style="text-transform: uppercase;">  -->
+                        <label for="vnum1" class="form-label">Vehicle Number (MH01AA1234)</label>
+                        <input class="validate vehicle-no" id="vnum1"   onkeyup="tabToNext(this,2)"  oninput="maxLengthCheckVnum(this,2)" pattern="[a-zA-Z]+" ng-pattern-restrict  type="text" name="vechicle_no"  placeholder="MH"  style="text-transform: uppercase;" > 
+                        <input class="validate vehicle-no" id="vnum2"  onkeyup="tabToNext(this,2)"  oninput="maxLengthCheckVnum(this,2)"    type="number" name="vechicle_no"   placeholder="01"  style="text-transform: uppercase;"> 
+                        <input class="validate vehicle-no" id="vnum3"  onkeyup="tabToNext(this,2)"  oninput="maxLengthCheckVnum(this,2)"    type="text" name="vechicle_no"  placeholder="AA"  style="text-transform: uppercase;"> 
+                        <input class="validate vehicle-no" id="vnum4"  onkeyup="tabToNext(this,4)"  oninput="maxLengthCheckVnum(this,4)"    type="number" name="vechicle_no"  placeholder="1234"  style="text-transform: uppercase;"> 
+
                     </div>
 
                     <div style="margin-bottom:15px;margin-top:15px;">
@@ -303,7 +310,7 @@
                         <label for="tbtype">MONTHLY</label>
                     </div>
                 </form>
-                <button ng-disabled="isDisabled" class="waves-effect waves-light btn-large accent-color width-100  animated bouncein delay-4" id="addBooking" ng-click="addBooking()">Add Booking</button>
+                <button autofocus ng-disabled="isDisabled" class="waves-effect waves-light btn-large accent-color width-100  animated bouncein delay-4 add-button" id="addBooking" ng-click="addBooking()">Add Booking</button>
             </div>
             <!-- <div class="modal-footer">
                 <button class="modal-action modal-close waves-effect waves-green btn-flat pull-left">Cancel</button>

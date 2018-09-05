@@ -31,6 +31,16 @@ function maxLengthCheck(object) {
         object.value = object.value.slice(0, 10);
     }
 }
+function maxLengthCheckVnum (object,maxLenght) {
+    if (object.value.length > maxLenght) {
+        object.value = object.value.slice(0, maxLenght);
+    }
+}
+function tabToNext(object, maxText) {
+     if(object.value.length == maxText) {
+     $(object).next('input').focus();
+  }
+}
 
 
 

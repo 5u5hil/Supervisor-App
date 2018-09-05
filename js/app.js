@@ -336,8 +336,8 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
 
     $scope.addBooking = function () {
-
-        if ($("#rnum").val().length < 10) {
+        var rnum = $("#vnum1").val() + $("#vnum2").val() + $("#vnum3").val() + $("#vnum4").val();
+        if (rnum < 10) {
             toast("Please enter valid Registration Number");
             return;
         }
@@ -348,42 +348,52 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
         }
 
 
-        var data = $("#addBooking").serialize();
-
+        var data = {
+            mobile: $("[name='mobile'").val(),
+            vechicle_no: rnum,
+            term: $("[name='term'").val(),
+            userId: $("[name='userId'").val(),
+            via: $("[name='via'").val(),
+            pid: $("[name='pid'").val(),
+            btype: $("[name='btype'").val()
+        };
         var url = apiEndpoint + ($("[name='btype']:checked").val() == 3 ? 'addMBooking' : 'addBooking');
         var type = 'POST';
-
-        if ($("[name='mobile'").val() == '' || $("[name='vechicle_no'").val() == '') {
+        if ($("[name='mobile'").val() == '' || rnum.length < 10) {
             toast("Please Enter all the details.");
             return false;
         }
 
-
-
-        var r = confirm("Phone No : " + $("[name='mobile'").val() + " \nRegistration No : " + $("[name='vechicle_no'").val() + " \nYou'll not be allowed to edit the details. Confirm Booking?");
+        var r = confirm("Phone No : " + $("[name='mobile'").val() + " \nRegistration No : " + rnum + " \nYou'll not be allowed to edit the details. Confirm Booking?");
         if (r == true) {
             $scope.isDisabled = true;
 
             if (online()) {
-
                 if ($("[name='btype']:checked").val() == '3') {
+                    data.getstatus = 'cost';
                     $.ajax({
                         url: url,
                         type: type,
-                        data: data + '&getstatus=cost',
+                        data: data,
                         success: function (data) {
                             $scope.isDisabled = false;
                             $scope.$digest();
                             if (data.status === 0) {
                                 toast(data.msg);
-
-
                             } else {
                                 //toast(data);
                                 var d = confirm("Check In : " + data.checkin_time + " \nCheck In : " + data['checkout_time'] + " \nFinal Amount : " + data['final_amt'] + " \nConfirm Booking?");
                                 if (d === true) {
                                     $scope.isDisabled = true;
-                                    var data = $("#addBooking").serialize();
+                                    var data = {
+                                        mobile: $("[name='mobile'").val(),
+                                        vechicle_no: rnum,
+                                        term: $("[name='term'").val(),
+                                        userId: $("[name='userId'").val(),
+                                        via: $("[name='via'").val(),
+                                        pid: $("[name='pid'").val(),
+                                        btype: $("[name='btype'").val()
+                                    };
                                     if (online()) {
                                         $.ajax({
                                             url: url,
@@ -429,15 +439,23 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
 
                 } else {
-
+                    var data = {
+                        mobile: $("[name='mobile'").val(),
+                        vechicle_no: rnum,
+                        term: $("[name='term'").val(),
+                        userId: $("[name='userId'").val(),
+                        via: $("[name='via'").val(),
+                        pid: $("[name='pid'").val(),
+                        btype: $("[name='btype'").val()
+                    };
                     $.ajax({
                         url: url,
                         type: type,
                         data: data,
                         success: function (data) {
-                            console.log(data)
+                            $scope.isDisabled = false;
+                            $scope.$digest();
                             if (data == 'Booking added') {
-
                                 refresh();
                                 toast("Booking Added.");
                                 $("#modal1").closeModal();
@@ -446,8 +464,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                                 });
                                 $scope.rnum = "";
                             } else {
-                                console.log("elsre")
-                                toast(data);
+                               toast(data);
                             }
                         }
                     });
@@ -459,11 +476,14 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                 $('#addBooking').each(function () {
                     this.reset();
                 });
-               $scope.rnum = "";
+                $scope.rnum = "";
+                $scope.isDisabled = false;
+                $scope.$digest();
                 if (get('toSync') == null || !isArray(get('toSync')))
                     set("toSync", JSON.stringify([]));
 
                 var toSync = get('toSync');
+                console.log(data, 'offline')
                 toSync.push({ url: url, data: data, type: type, pushedOn: new Date() });
                 set('toSync', toSync);
 

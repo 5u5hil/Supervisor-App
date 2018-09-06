@@ -334,21 +334,19 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
 
     }
 
-
-    $scope.addBooking = function () {
+     $scope.addBooking = function () {
         var rnum = $("#vnum1").val() + $("#vnum2").val() + $("#vnum3").val() + $("#vnum4").val();
-        if (rnum < 10) {
-            toast("Please enter valid Registration Number");
-            return;
+        rnum = rnum.toUpperCase();
+        var reg = /^([A-Z]{2,3})(\d{2,4})|([A-Z]{2,3})\d{2}-[A-Z]{1,2}\d{1,4}$/;
+        if (!reg.test(rnum)) {
+            toast('Please enter valid Registration Number');
         }
-
         if ($("#mobile").val().length < 10) {
             toast("Please enter valid Mobile Number");
             return;
         }
 
-
-        var data = {
+         var data = {
             mobile: $("[name='mobile'").val(),
             vechicle_no: rnum,
             term: $("[name='term'").val(),
@@ -464,7 +462,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
                                 });
                                 $scope.rnum = "";
                             } else {
-                               toast(data);
+                                toast(data);
                             }
                         }
                     });

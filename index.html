@@ -263,12 +263,9 @@
         <div id="modal1" class="modal">
             <div class="modal-content">
                 <h4>Add New Booking</h4>
-                <form id="addBooking" >
+                <form id="addBooking" ng-submit="addBooking()" >
                    
-                   
-
-
-                    <div class="input-field">
+                   <div class="input-field">
                         <!--<i class="ion-iphone prefix"></i> -->
                         <label for="mobile" class="form-label active">Mobile Number (9867001155)</label>
                         <input class="validate" id="mobile" type="number" oninput="maxLengthCheck(this)"  name="mobile" style="text-transform: uppercase;"> 
@@ -309,8 +306,9 @@
                         <input name="btype" type="radio" id="tbtype"  value="3" />
                         <label for="tbtype">MONTHLY</label>
                     </div>
+                    <button autofocus ng-disabled="isDisabled" class="waves-effect waves-light btn-large accent-color width-100  animated bouncein delay-4 add-button" id="addBooking">Add Booking</button>
                 </form>
-                <button autofocus ng-disabled="isDisabled" class="waves-effect waves-light btn-large accent-color width-100  animated bouncein delay-4 add-button" id="addBooking" ng-click="addBooking()">Add Booking</button>
+               
             </div>
             <!-- <div class="modal-footer">
                 <button class="modal-action modal-close waves-effect waves-green btn-flat pull-left">Cancel</button>

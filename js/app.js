@@ -357,7 +357,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
         };
         var url = apiEndpoint + ($("[name='btype']:checked").val() == 3 ? 'addMBooking' : 'addBooking');
         var type = 'POST';
-        if ($("[name='mobile'").val() == '' || rnum.length < 10) {
+        if ($("[name='mobile'").val() == '') {
             toast("Please Enter all the details.");
             return false;
         }

@@ -2500,6 +2500,7 @@ color : #c50202!important;
     width: 18% !important;
     text-align: center;
     margin: 20px  5px 5px 0 !important;
+    height: 2.5rem !important;
  }
 
 .vehicle-no:focus:not([readonly]) {

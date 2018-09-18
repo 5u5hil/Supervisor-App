@@ -337,9 +337,11 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
      $scope.addBooking = function () {
         var rnum = $("#vnum1").val() + $("#vnum2").val() + $("#vnum3").val() + $("#vnum4").val();
         rnum = rnum.toUpperCase();
-        var reg = /^([A-Z]{2,3})(\d{2,4})|([A-Z]{2,3})\d{2}-[A-Z]{1,2}\d{1,4}$/;
+        // var reg = /^([A-Z]{2,3})(\d{2,4})|([A-Z]{2,3})\d{2}-[A-Z]{1,2}\d{1,4}$/;
+        var reg = /^[A-Z]{2}[0-9]{2}[A-Z]{1,2}[0-9]{4}$/;
         if (!reg.test(rnum)) {
             toast('Please enter valid Registration Number');
+            return;
         }
         if ($("#mobile").val().length < 10) {
             toast("Please enter valid Mobile Number");

@@ -2502,7 +2502,9 @@ color : #c50202!important;
     margin: 20px  5px 5px 0 !important;
     height: 2.5rem !important;
  }
-
+ .vehicle-no-last-box {
+   width: 20% !important;
+   }
 .vehicle-no:focus:not([readonly]) {
     border-bottom: 1px solid #9e9e9e !important;
     box-shadow: unset !important;

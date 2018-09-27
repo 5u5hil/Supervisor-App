@@ -2518,3 +2518,11 @@ color : #c50202!important;
 .vinput-field {
     margin-top: 2rem;
 }
+.sync-btn {
+   float: right;
+  color: #fff;
+  font-size: 12px;
+  height: 36px; 
+  line-height: 36px; 
+  padding: 0 1rem;
+ }

@@ -193,19 +193,21 @@
                             <div class="row m-l-0">
                                 <div class="col">
 
-                                    <div data-vehicle-number="{{booking.rnum}}" data-booking-id="{{booking.id}}" ng-if="booking.bstatus == 2 && booking.btype != 3" class="contact" ng-repeat="booking in bookings">
-                                        <span class="date">{{ booking.checkin_time | timestampToISO  | date:'h:mm a'}}</span>
+                                    <div data-vehicle-number="{{booking.rnum}}" data-booking-id="{{booking.id}}" 
+                                
+                                    ng-if="(booking.bstatus == 2 && booking.btype != 3) || (booking.mode && booking.mode == 'offline')" class="contact" ng-repeat="booking in bookings">
+                                    
+                                  <span class="date">{{ booking.checkin_time | timestampToISO  | date:'h:mm a'}}</span>
                                         <div class="dot z-depth-1 {{ (booking.ptype == 2 && booking.pstatus == 1) ? 'prepaid' : 'postpaid'}}">
                                         </div>
                                         <p class="{{ booking.via == 1 ? 'vred' : '' }}">
-                                            {{booking.rnum}} 
+                                            {{ booking.id ? booking.rnum : booking.vechicle_no}} 
                                             <!-- <i class="ion-edit" ng-if="booking.via == 1" ng-click="editB(booking.id)"></i> &nbsp; -->
                                             <!-- <i class="ion-log-out circle" ng-if="booking.via == 1" ng-click="scheckout(booking.id, booking.checkin_time)"></i>--> 
-                                            <i class="ion-log-out circle" ng-click="ncheckout(booking.id)"></i> 
-
-
-                                        </p>
-                                        <span>#{{booking.id}} {{booking.mname}} </span>
+                                            <i ng-if="booking.id" class="ion-log-out circle" ng-click="ncheckout(booking.id)"></i> 
+                                            <button  ng-if="!booking.id" ng-click="sync()"  class="sync-btn accent-color btn-large">Sync</button> </p>
+                                       <span ng-if="booking.id" >#{{booking.id}} {{booking.mname}} </span>
+                                        <span ng-if="!booking.id" >Added Offline </span>
 
                                     </div>
 
@@ -279,16 +281,10 @@
                         <input class="validate vehicle-no" id="vnum2"  onkeyup="tabToNext(this,2)"  oninput="maxLengthCheckVnum(this,2)"    type="number" name="vechicle_no"   placeholder="01"  style="text-transform: uppercase;"> 
                         <input class="validate vehicle-no" id="vnum3"  onkeyup="tabToNext(this,2)"  oninput="maxLengthCheckVnum(this,2)"    type="text" name="vechicle_no"  placeholder="AA"  style="text-transform: uppercase;"> 
                         <input class="validate vehicle-no vehicle-no-last-box " id="vnum4"  onkeyup="tabToNext(this,4)"  oninput="maxLengthCheckVnum(this,4)"    type="number" name="vechicle_no"  placeholder="1234"  style="text-transform: uppercase;"> 
-
-                    </div>
+                        </div>
 
                     <div style="margin-bottom:15px;margin-top:15px;">
-
-
-
-
-
-                        <input name="term" type="radio" id="fwow" value="4" checked/>
+                     <input name="term" type="radio" id="fwow" value="4" checked/>
                         <label for="fwow" style="padding-right:20px;">4 WHEELER</label> 
 
                         <input name="term" type="radio" id="twow"  value="3" />

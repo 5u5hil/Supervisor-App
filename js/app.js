@@ -1,13 +1,16 @@
 var app = angular.module("occupyparking", ["ngSanitize"]);
-
-app.filter("timestampToISO", function() {
-  return function(input) {
+var now = new Date();
+var datetime = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+datetime += ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+console.log(datetime);
+app.filter("timestampToISO", function () {
+  return function (input) {
     input = new Date(input).toISOString();
     return input;
   };
 });
 
-app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
+app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
   $scope.isDisabled = false;
 
   $scope.user = get("user");
@@ -16,11 +19,11 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
 
   refresh();
 
-  $interval(function() {
+  $interval(function () {
     refresh();
   }, 20000);
 
-  $scope.ref = function() {
+  $scope.ref = function () {
     refresh();
   };
 
@@ -29,28 +32,51 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
       $.ajax({
         url: apiEndpoint + "getTodaysBookingsByLot",
         type: "get",
-        data: { pid: get("user").parkingLot },
-        success: function(data) {
-          $scope.$applyAsync(function() {
+        data: {
+          pid: get("user").parkingLot
+        },
+        success: function (data) {
+          $scope.$applyAsync(function () {
             $scope.bookings = data;
-            if ($("input[name='search']").val() != "") {
-              $timeout(function() {
+            $scope.bookingData = data;
+            var toSync = get("toSync");
+            if(toSync) {
+              var offlineData = [];
+              for (var i = toSync.length - 1; i >= 0; i--) {
+                offlineData.push(toSync[i].data);
+              }
+              $scope.bookings = offlineData.concat($scope.bookings);
+            }
+           if ($("input[name='search']").val() != "") {
+              $timeout(function () {
                 var e = $.Event("keyup");
                 e.keyCode = 13; // enter
                 $("input[name='search']").trigger(e);
               }, 100);
             }
           });
-
-          set("bookings", { lastSync: new Date(), data: data });
+          set("bookings", {
+          lastSync: new Date(),
+            data: data
+          });
         }
       });
     } else {
-      if (get("bookings") != null) $scope.bookings = get("bookings").data;
+    var toSync = get("toSync");
+      if(toSync) {
+        var offlineData = [];
+        for (var i = toSync.length - 1; i >= 0; i--) {
+          offlineData.push(toSync[i].data);
+        }
+       var bookingData = offlineData.concat(get("bookings").data);
+       if (get("bookings") != null) $scope.bookings = bookingData;
+      } else {
+        if (get("bookings") != null) $scope.bookings = get("bookings").data;
+      }
     }
   }
 
-  $scope.ncheckout = function(oid) {
+  $scope.ncheckout = function (oid) {
     var data = {
       oid: oid,
       userId: get("user").ID,
@@ -64,7 +90,7 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
         url: url,
         type: type,
         data: data,
-        success: function(res) {
+        success: function (res) {
           alert(res[0]);
           data.famt = res[1];
           data.fcharge = res[2];
@@ -75,8 +101,8 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
               url: apiEndpoint + "confirmCheckout",
               type: "POST",
               data: data,
-              success: function(meh) {
-                $scope.$applyAsync(function() {
+              success: function (meh) {
+                $scope.$applyAsync(function () {
                   if (meh == 1) {
                     objIndex = $scope.bookings.findIndex(obj => obj.id == oid);
                     $scope.bookings[objIndex].bstatus = 3;
@@ -89,7 +115,10 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
               }
             });
           }
-          set("bookings", { lastSync: new Date(), data: $scope.bookings });
+          set("bookings", {
+            lastSync: new Date(),
+            data: $scope.bookings
+          });
         }
       });
     } else {
@@ -100,13 +129,22 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
         set("toSync", JSON.stringify([]));
 
       var toSync = get("toSync");
-      toSync.push({ url: url, data: data, type: type, pushedOn: new Date() });
+       toSync.push({
+        url: url,
+        data: data,
+        type: type,
+        pushedOn: new Date(),
+        checkin_time: datetime
+      });
       set("toSync", toSync);
     }
   };
 
-  $scope.scheckout = function(oid, time) {
-    var data = { oid: oid, userId: get("user").ID };
+  $scope.scheckout = function (oid, time) {
+    var data = {
+      oid: oid,
+      userId: get("user").ID
+    };
     var url = apiEndpoint + "scheckout";
     var type = "POST";
 
@@ -125,10 +163,10 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
 
     var amt = prompt(
       "Total Parked Time : " +
-        humanReadable.hours +
-        " Hours " +
-        humanReadable.minutes +
-        " Mins. \nEnter Amount Collected",
+      humanReadable.hours +
+      " Hours " +
+      humanReadable.minutes +
+      " Mins. \nEnter Amount Collected",
       ""
     );
 
@@ -142,8 +180,8 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
             url: url,
             type: type,
             data: data,
-            success: function(data) {
-              $scope.$applyAsync(function() {
+            success: function (data) {
+              $scope.$applyAsync(function () {
                 if (data == 1) {
                   objIndex = $scope.bookings.findIndex(obj => obj.id == oid);
                   $scope.bookings[objIndex].bstatus = 3;
@@ -152,7 +190,10 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
                   toast("Oops ... looks like something went wrong.");
                 }
               });
-              set("bookings", { lastSync: new Date(), data: $scope.bookings });
+              set("bookings", {
+                lastSync: new Date(),
+                data: $scope.bookings
+              });
             }
           });
         } else {
@@ -167,7 +208,8 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
             url: url,
             data: data,
             type: type,
-            pushedOn: new Date()
+            pushedOn: new Date(),
+            checkin_time: datetime
           });
           set("toSync", toSync);
         }
@@ -177,8 +219,11 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
     }
   };
 
-  $scope.checkin = function(oid) {
-    var data = { oid: oid, userId: get("user").ID };
+  $scope.checkin = function (oid) {
+    var data = {
+      oid: oid,
+      userId: get("user").ID
+    };
     var url = apiEndpoint + "checkin";
     var type = "POST";
 
@@ -189,8 +234,8 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
           url: url,
           type: type,
           data: data,
-          success: function(data) {
-            $scope.$applyAsync(function() {
+          success: function (data) {
+            $scope.$applyAsync(function () {
               if (data == 1) {
                 objIndex = $scope.bookings.findIndex(obj => obj.id == oid);
                 $scope.bookings[objIndex].bstatus = 2;
@@ -199,7 +244,10 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
                 toast("Oops ... looks like something went wrong.");
               }
             });
-            set("bookings", { lastSync: new Date(), data: $scope.bookings });
+            set("bookings", {
+              lastSync: new Date(),
+              data: $scope.bookings
+            });
           }
         });
       } else {
@@ -211,14 +259,23 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
           set("toSync", JSON.stringify([]));
 
         var toSync = get("toSync");
-        toSync.push({ url: url, data: data, type: type, pushedOn: new Date() });
+        toSync.push({
+          url: url,
+          data: data,
+          type: type,
+          pushedOn: new Date()
+        });
         set("toSync", toSync);
       }
     }
   };
 
-  $scope.minout = function(oid, otype) {
-    var data = { oid: oid, userId: get("user").ID, type: otype };
+  $scope.minout = function (oid, otype) {
+    var data = {
+      oid: oid,
+      userId: get("user").ID,
+      type: otype
+    };
     var url = apiEndpoint + "minout";
     var type = "POST";
     var msg = otype == 1 ? "Checkin Done" : "Checkout Done";
@@ -230,15 +287,18 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
           url: url,
           type: type,
           data: data,
-          success: function(data) {
-            $scope.$applyAsync(function() {
+          success: function (data) {
+            $scope.$applyAsync(function () {
               if (data) {
                 objIndex = $scope.bookings.findIndex(obj => obj.id == oid);
                 $scope.bookings[objIndex] = data;
                 toast(msg);
               }
             });
-            set("bookings", { lastSync: new Date(), data: $scope.bookings });
+            set("bookings", {
+              lastSync: new Date(),
+              data: $scope.bookings
+            });
           }
         });
       } else {
@@ -250,13 +310,18 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
           set("toSync", JSON.stringify([]));
 
         var toSync = get("toSync");
-        toSync.push({ url: url, data: data, type: type, pushedOn: new Date() });
+        toSync.push({
+          url: url,
+          data: data,
+          type: type,
+          pushedOn: new Date()
+        });
         set("toSync", toSync);
       }
     }
   };
 
-  $scope.updateBooking = function() {
+  $scope.updateBooking = function () {
     var data = $("#editBooking").serialize();
     var url = apiEndpoint + "updateBooking";
     var type = "POST";
@@ -274,13 +339,13 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
           url: url,
           type: type,
           data: data,
-          success: function(data) {
+          success: function (data) {
             $scope.isDisabled = false;
             if (data == "Booking updated") {
               refresh();
               toast("Booking Updated.");
               $("#modal2").closeModal();
-              $("#editBooking").each(function() {
+              $("#editBooking").each(function () {
                 this.reset();
               });
             } else {
@@ -297,14 +362,19 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
           set("toSync", JSON.stringify([]));
 
         var toSync = get("toSync");
-        toSync.push({ url: url, data: data, type: type, pushedOn: new Date() });
+        toSync.push({
+          url: url,
+          data: data,
+          type: type,
+          pushedOn: new Date()
+        });
         set("toSync", toSync);
       }
     }
   };
 
-  $scope.addBooking = function() {
-    var rnum =
+  $scope.addBooking = function () {
+   var rnum =
       $("#vnum1").val() +
       $("#vnum2").val() +
       $("#vnum3").val() +
@@ -340,10 +410,10 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
 
     var r = confirm(
       "Phone No : " +
-        $("[name='mobile'").val() +
-        " \nRegistration No : " +
-        rnum +
-        " \nYou'll not be allowed to edit the details. Confirm Booking?"
+      $("[name='mobile'").val() +
+      " \nRegistration No : " +
+      rnum +
+      " \nYou'll not be allowed to edit the details. Confirm Booking?"
     );
     if (r == true) {
       $scope.isDisabled = true;
@@ -355,7 +425,7 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
             url: url,
             type: type,
             data: data,
-            success: function(data) {
+            success: function (data) {
               $scope.isDisabled = false;
               $scope.$digest();
               if (data.status === 0) {
@@ -364,12 +434,12 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
                 //toast(data);
                 var d = confirm(
                   "Check In : " +
-                    data.checkin_time +
-                    " \nCheck In : " +
-                    data["checkout_time"] +
-                    " \nFinal Amount : " +
-                    data["final_amt"] +
-                    " \nConfirm Booking?"
+                  data.checkin_time +
+                  " \nCheck In : " +
+                  data["checkout_time"] +
+                  " \nFinal Amount : " +
+                  data["final_amt"] +
+                  " \nConfirm Booking?"
                 );
                 if (d === true) {
                   $scope.isDisabled = true;
@@ -387,13 +457,13 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
                       url: url,
                       type: type,
                       data: data,
-                      success: function(result) {
+                      success: function (result) {
                         $scope.isDisabled = false;
                         if (result === "Booking added") {
                           refresh();
                           toast("Booking Added.");
                           $("#modal1").closeModal();
-                          $("#addBooking").each(function() {
+                          $("#addBooking").each(function () {
                             this.reset();
                           });
                           $scope.rnum = "";
@@ -408,7 +478,7 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
                     );
                     refresh();
                     $("#modal1").closeModal();
-                    $("#addBooking").each(function() {
+                    $("#addBooking").each(function () {
                       this.reset();
                     });
                     $scope.rnum = "";
@@ -420,7 +490,8 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
                       url: url,
                       data: data,
                       type: type,
-                      pushedOn: new Date()
+                      pushedOn: new Date(),
+                      checkin_time: datetime
                     });
                     set("toSync", toSync);
                   }
@@ -442,14 +513,14 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
             url: url,
             type: type,
             data: data,
-            success: function(data) {
+            success: function (data) {
               $scope.isDisabled = false;
               $scope.$digest();
               if (data == "Booking added") {
                 refresh();
                 toast("Booking Added.");
                 $("#modal1").closeModal();
-                $("#addBooking").each(function() {
+                $("#addBooking").each(function () {
                   this.reset();
                 });
                 $scope.rnum = "";
@@ -463,46 +534,73 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
         if (get("toSync") == null || !isArray(get("toSync")))
           set("toSync", JSON.stringify([]));
         var toSync = get("toSync");
-
+        data["mode"] = "offline";
+        data["checkin_time"] = datetime;
         toSync.push({
           url: url,
           data: data,
           type: type,
           pushedOn: new Date()
         });
-        set("toSync", toSync);
+       set("toSync", toSync);
+        // alert(JSON.stringify($scope.bookings));
         alert(
           "No Internet Connection. Please click the sync button once connected back to the internet."
         );
 
         $("#modal1").closeModal();
-        $("#addBooking").each(function() {
+        $("#addBooking").each(function () {
           this.reset();
         });
         $scope.rnum = "";
         $scope.isDisabled = false;
-        $scope.$digest();
-
-        refresh();
-      }
+        // $scope.$digest();
+        // refresh();
+        var offlineData = [];
+        for (var i = toSync.length - 1; i >= 0; i--) {
+          offlineData.push(toSync[i].data);
+        }
+        $scope.bookings = offlineData.concat($scope.bookingData);
+        }
     }
   };
 
-  $scope.sync = function() {
+  $scope.sync = function () {
     if (online()) {
       var toSync = get("toSync");
-
-      for (var i = toSync.length - 1; i >= 0; i--) {
-        var request = new XMLHttpRequest();
-        request.open(toSync[i].type, toSync[i].url, false); // `false` makes the request synchronous
-        request.send(toSync[i].data);
-
-        if (request.status === 200) {
-          toSync.splice(i, 1);
-        }
-      }
-
-      set("toSync", toSync);
+      var itemsProcessed = 0;
+      toSync.forEach(function (bookingData, index) {
+       bookingData.data["mode"] = "offline";
+         $.ajax({
+          url: bookingData.url,
+          type: bookingData.type,
+          data: bookingData.data,
+          success: function (result) {
+            $scope.isDisabled = false;
+            if (result === "Booking added") {
+              toSync[index].isAdded = true;  
+              refresh();
+             toast("Booking Added.");
+              $("#modal1").closeModal();
+              $("#addBooking").each(function () {
+                this.reset();
+              });
+              $scope.rnum = "";
+             } else {
+              toSync[index].isAdded = false;  
+              toast(result.msg);
+            }
+            itemsProcessed++;
+            if(itemsProcessed === toSync.length) {
+              toSync = toSync.filter(data => {
+              return data.isAdded == false;
+            });
+            set("toSync", toSync);
+            }
+          }
+        });
+        
+      });
     } else {
       alert(
         "Data cannot be synced as the device is not connected to the internet"
@@ -510,19 +608,22 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
     }
   };
 
-  $scope.logout = function() {
+  $scope.logout = function () {
     window.localStorage.removeItem("user");
     window.location.href = "login.html";
   };
 
-  $scope.editB = function(id) {
+  $scope.editB = function (id) {
     $scope.bid = id;
     if (online()) {
       $.ajax({
         url: apiEndpoint + "editBooking",
         type: "get",
-        data: { pid: get("user").parkingLot, id: id },
-        success: function(data) {
+        data: {
+          pid: get("user").parkingLot,
+          id: id
+        },
+        success: function (data) {
           $("#modal2").openModal();
         }
       });
@@ -534,10 +635,10 @@ app.controller("homeCtrl", function($scope, $http, $interval, $timeout) {
   };
 });
 
-function req(url, data, type) {}
+function req(url, data, type) { }
 
-$(document).ready(function() {
-  $("input[name='search']").keyup(function(e) {
+$(document).ready(function () {
+  $("input[name='search']").keyup(function (e) {
     var sterm = $(this).val();
     if (sterm == "") {
       $(".contact").show();
@@ -547,23 +648,23 @@ $(document).ready(function() {
       $(".contact[data-booking-id='" + sterm + "']").show();
       $(
         ".f" +
-          $(".contact[data-booking-id='" + sterm + "']")
-            .parent()
-            .parent()
-            .parent()
-            .parent()
-            .attr("id")
+        $(".contact[data-booking-id='" + sterm + "']")
+          .parent()
+          .parent()
+          .parent()
+          .parent()
+          .attr("id")
       ).click();
 
       $(".contact[data-vehicle-number*='" + sterm + "' i]").show();
       $(
         ".f" +
-          $(".contact[data-vehicle-number*='" + sterm + "' i]")
-            .parent()
-            .parent()
-            .parent()
-            .parent()
-            .attr("id")
+        $(".contact[data-vehicle-number*='" + sterm + "' i]")
+          .parent()
+          .parent()
+          .parent()
+          .parent()
+          .attr("id")
       ).click();
     }
   });

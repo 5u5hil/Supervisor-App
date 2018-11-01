@@ -1,3 +1,4 @@
+
 var app = angular.module("occupyparking", ["ngSanitize"]);
 var now = new Date();
 var datetime = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();

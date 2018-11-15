@@ -1,5 +1,7 @@
-var domain = "http://op.clu.pw/";
-var apiEndpoint = "http://op.clu.pw/api/?method=";
+// var domain = "http://op.clu.pw/";
+// var apiEndpoint = "http://op.clu.pw/api/?method=";
+var domain = "https://parkoscope.com/";
+var apiEndpoint = "https://parkoscope.com/api/?method=";
 
 $(document).ready(function() {
   $("#chkLogin").click(function(e) {

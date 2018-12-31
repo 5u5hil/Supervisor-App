@@ -284,10 +284,10 @@
                         </div>
 
                     <div style="margin-bottom:15px;margin-top:15px;">
-                     <input name="term" type="radio" id="fwow" value="4" checked/>
+                     <input name="term" type="radio" id="fwow" value="4" checked  ng-click="checkMonthlyBooking1(4);"/>
                         <label for="fwow" style="padding-right:20px;">4 WHEELER</label> 
 
-                        <input name="term" type="radio" id="twow"  value="3" />
+                        <input name="term" type="radio" id="twow"  value="3"   ng-click="checkMonthlyBooking1(3);"/>
                         <label for="twow">2 WHEELER</label>
 
                         <input type="hidden" name="userId" value="{{ user.ID}}" />
@@ -296,12 +296,11 @@
 
                     </div>
                      <div ng-if="user.is_madd == '1'" style="margin-top:15px;margin-bottom:15px;">
-                        <input name="btype" type="radio" id="fbtype" value="1" checked/>
+                      <input name="btype" type="radio" id="fbtype" value="1" checked />
                         <label for="fbtype" style="padding-right:20px;">HOURLY</label> 
-
-                        <input name="btype" type="radio" id="tbtype"  value="3" />
-                        <label for="tbtype">MONTHLY</label>
-                    </div>
+                        <input name="btype" type="radio" id="tbtype"  value="3"    ng-if="monthlyBooking"/>
+                            <label for="tbtype"   ng-if="monthlyBooking">MONTHLY</label>
+                         </div>
                     <button autofocus ng-disabled="isDisabled" class="waves-effect waves-light btn-large accent-color width-100  animated bouncein delay-4 add-button" id="addBooking">Add Booking</button>
                 </form>
                

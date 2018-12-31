@@ -11,15 +11,13 @@ app.filter("timestampToISO", function () {
   };
 });
 
-app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
+app.controller("homeCtrl", function ($scope, $http, $interval, $timeout, $rootScope) {
   $scope.isDisabled = false;
-
+  $scope.monthlyBooking = false;
+  getMonthlyBookingStatus();
   $scope.user = get("user");
-
   $scope.bookings = [];
-
   refresh();
-
   $interval(function () {
     refresh();
   }, 20000);
@@ -41,14 +39,14 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
             $scope.bookings = data;
             $scope.bookingData = data;
             var toSync = get("toSync");
-            if(toSync) {
+            if (toSync) {
               var offlineData = [];
               for (var i = toSync.length - 1; i >= 0; i--) {
                 offlineData.push(toSync[i].data);
               }
               $scope.bookings = offlineData.concat($scope.bookings);
             }
-           if ($("input[name='search']").val() != "") {
+            if ($("input[name='search']").val() != "") {
               $timeout(function () {
                 var e = $.Event("keyup");
                 e.keyCode = 13; // enter
@@ -57,25 +55,26 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
             }
           });
           set("bookings", {
-          lastSync: new Date(),
+            lastSync: new Date(),
             data: data
           });
         }
       });
     } else {
-    var toSync = get("toSync");
-      if(toSync) {
+      var toSync = get("toSync");
+      if (toSync) {
         var offlineData = [];
         for (var i = toSync.length - 1; i >= 0; i--) {
           offlineData.push(toSync[i].data);
         }
-       var bookingData = offlineData.concat(get("bookings").data);
-       if (get("bookings") != null) $scope.bookings = bookingData;
+        var bookingData = offlineData.concat(get("bookings").data);
+        if (get("bookings") != null) $scope.bookings = bookingData;
       } else {
         if (get("bookings") != null) $scope.bookings = get("bookings").data;
       }
     }
   }
+
 
   $scope.ncheckout = function (oid) {
     var data = {
@@ -130,7 +129,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
         set("toSync", JSON.stringify([]));
 
       var toSync = get("toSync");
-       toSync.push({
+      toSync.push({
         url: url,
         data: data,
         type: type,
@@ -375,7 +374,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
   };
 
   $scope.addBooking = function () {
-   var rnum =
+    var rnum =
       $("#vnum1").val() +
       $("#vnum2").val() +
       $("#vnum3").val() +
@@ -543,7 +542,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
           type: type,
           pushedOn: new Date()
         });
-       set("toSync", toSync);
+        set("toSync", toSync);
         // alert(JSON.stringify($scope.bookings));
         alert(
           "No Internet Connection. Please click the sync button once connected back to the internet."
@@ -562,7 +561,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
           offlineData.push(toSync[i].data);
         }
         $scope.bookings = offlineData.concat($scope.bookingData);
-        }
+      }
     }
   };
 
@@ -571,36 +570,36 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
       var toSync = get("toSync");
       var itemsProcessed = 0;
       toSync.forEach(function (bookingData, index) {
-       bookingData.data["mode"] = "offline";
-         $.ajax({
+        bookingData.data["mode"] = "offline";
+        $.ajax({
           url: bookingData.url,
           type: bookingData.type,
           data: bookingData.data,
           success: function (result) {
             $scope.isDisabled = false;
             if (result === "Booking added") {
-              toSync[index].isAdded = true;  
+              toSync[index].isAdded = true;
               refresh();
-             toast("Booking Added.");
+              toast("Booking Added.");
               $("#modal1").closeModal();
               $("#addBooking").each(function () {
                 this.reset();
               });
               $scope.rnum = "";
-             } else {
-              toSync[index].isAdded = false;  
+            } else {
+              toSync[index].isAdded = false;
               toast(result.msg);
             }
             itemsProcessed++;
-            if(itemsProcessed === toSync.length) {
+            if (itemsProcessed === toSync.length) {
               toSync = toSync.filter(data => {
-              return data.isAdded == false;
-            });
-            set("toSync", toSync);
+                return data.isAdded == false;
+              });
+              set("toSync", toSync);
             }
           }
         });
-        
+
       });
     } else {
       alert(
@@ -613,7 +612,35 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout) {
     window.localStorage.removeItem("user");
     window.location.href = "login.html";
   };
-
+  function getMonthlyBookingStatus() {
+    $.ajax({
+      url: apiEndpoint + "getMonthlyBookingStatus",
+      type: "post",
+      data: {
+        userId: get("user").ID
+      },
+      success: function (data) {
+        $scope.monthlyBookingData = data;
+        checkMonthlyBooking(4);
+      }
+    });
+  };
+  function checkMonthlyBooking(value) {
+    if ($scope.monthlyBookingData.supervisiorM == 1) {
+      if (value == 4 && $scope.monthlyBookingData.supervisiorMC == 1) {
+        $scope.monthlyBooking = true;
+        $scope.$applyAsync();
+      } else if (value == 3 && $scope.monthlyBookingData.supervisiorMB == 1) {
+        $scope.monthlyBooking = true;
+        $scope.$applyAsync();
+      } else {
+        $scope.monthlyBooking = false;
+      }
+    }
+  }
+  $scope.checkMonthlyBooking1 = function (value) {
+    checkMonthlyBooking(value);
+  }
   $scope.editB = function (id) {
     $scope.bid = id;
     if (online()) {

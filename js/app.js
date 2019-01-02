@@ -621,11 +621,11 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout, $rootSc
       },
       success: function (data) {
         $scope.monthlyBookingData = data;
-        checkMonthlyBooking(4);
+        $scope.checkMonthlyBooking(4);
       }
     });
   };
-  function checkMonthlyBooking(value) {
+  $scope.checkMonthlyBooking = function (value) {
     if ($scope.monthlyBookingData.supervisiorM == 1) {
       if (value == 4 && $scope.monthlyBookingData.supervisiorMC == 1) {
         $scope.monthlyBooking = true;
@@ -637,9 +637,6 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout, $rootSc
         $scope.monthlyBooking = false;
       }
     }
-  }
-  $scope.checkMonthlyBooking1 = function (value) {
-    checkMonthlyBooking(value);
   }
   $scope.editB = function (id) {
     $scope.bid = id;

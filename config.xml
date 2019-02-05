@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
-        id          = "com.sccupyparking.supervisor"
+        id          = "com.parkoscope.business"
         versionCode = "10"
         version     = "1.0.0" >
 
@@ -16,7 +16,7 @@
     <author href="https://www.infinisystem.com" email="support@infiniteit.biz">
         Infini Systems
     </author>
-
+    <preference name="android-targetSdkVersion" value="26"/>
     
     <preference name="orientation" value="portrait" />
     

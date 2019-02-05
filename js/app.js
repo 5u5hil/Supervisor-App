@@ -638,6 +638,10 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout, $rootSc
       }
     }
   }
+  $scope.getBookingDate = function (value){
+    var split = value.split(' ');
+    return split[0];
+  }
   $scope.editB = function (id) {
     $scope.bid = id;
     if (online()) {
@@ -694,3 +698,4 @@ $(document).ready(function () {
     }
   });
 });
+

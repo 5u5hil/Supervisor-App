@@ -6,6 +6,12 @@ datetime += ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds
 console.log(datetime);
 app.filter("timestampToISO", function () {
   return function (input) {
+    if (input == '0000-00-00 00:00:00') {
+      var now = new Date();
+      var datetime = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+      datetime += ' ' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+      input = datetime;
+    }
     input = new Date(input).toISOString();
     return input;
   };
@@ -244,7 +250,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout, $rootSc
                 toast("Oops ... looks like something went wrong.");
               }
             });
-            set("bookings", {
+           set("bookings", {
               lastSync: new Date(),
               data: $scope.bookings
             });
@@ -393,7 +399,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout, $rootSc
     var data = {
       mobile: $("[name='mobile'").val(),
       vechicle_no: rnum,
-      term: $("[name='term'").val(),
+      term: $("input[name='term']:checked").val(),
       userId: $("[name='userId'").val(),
       via: $("[name='via'").val(),
       pid: $("[name='pid'").val(),
@@ -446,7 +452,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout, $rootSc
                   var data = {
                     mobile: $("[name='mobile'").val(),
                     vechicle_no: rnum,
-                    term: $("[name='term'").val(),
+                    term: $("input[name='term']:checked").val(),
                     userId: $("[name='userId'").val(),
                     via: $("[name='via'").val(),
                     pid: $("[name='pid'").val(),
@@ -503,7 +509,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout, $rootSc
           var data = {
             mobile: $("[name='mobile'").val(),
             vechicle_no: rnum,
-            term: $("[name='term'").val(),
+            term: $("input[name='term']:checked").val(),
             userId: $("[name='userId'").val(),
             via: $("[name='via'").val(),
             pid: $("[name='pid'").val(),
@@ -638,7 +644,7 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout, $rootSc
       }
     }
   }
-  $scope.getBookingDate = function (value){
+  $scope.getBookingDate = function (value) {
     var split = value.split(' ');
     return split[0];
   }

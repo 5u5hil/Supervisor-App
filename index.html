@@ -190,7 +190,7 @@
                                             {{booking.rnum}}
                                             <i class="ion-log-in pull-right"  ng-click="checkin(booking.id)"></i>
                                         </p>
-                                        <span>#{{booking.id}} {{booking.mname}} </span>
+                                        <span>#{{booking.id}} {{booking.mname}} {{booking.manuName}}</span>
 
                                     </div>
                                 </div>
@@ -216,7 +216,7 @@
                                             <!-- <i class="ion-log-out circle" ng-if="booking.via == 1" ng-click="scheckout(booking.id, booking.checkin_time)"></i>--> 
                                             <i ng-if="booking.id" class="ion-log-out circle" ng-click="ncheckout(booking.id)"></i> 
                                             <button  ng-if="!booking.id" ng-click="sync()"  class="sync-btn accent-color btn-large">Sync</button> </p>
-                                       <span ng-if="booking.id" >#{{booking.id}} {{booking.mname}} </span>
+                                       <span ng-if="booking.id" >#{{booking.id}} {{booking.mname}} {{booking.manuName}} </span>
                                         <span ng-if="!booking.id" >Added Offline </span>
 
                                     </div>

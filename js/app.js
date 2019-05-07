@@ -403,7 +403,8 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout, $rootSc
       userId: $("[name='userId'").val(),
       via: $("[name='via'").val(),
       pid: $("[name='pid'").val(),
-      btype: $("[name='btype'").val()
+      btype: $("[name='btype'").val(),
+      cid: get("user").cid
     };
     var url =
       apiEndpoint +
@@ -513,7 +514,8 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout, $rootSc
             userId: $("[name='userId'").val(),
             via: $("[name='via'").val(),
             pid: $("[name='pid'").val(),
-            btype: $("[name='btype'").val()
+            btype: $("[name='btype'").val(),
+            cid:  get("user").cid
           };
           $.ajax({
             url: url,

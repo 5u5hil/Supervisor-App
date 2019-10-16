@@ -2,8 +2,8 @@
 <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.parkoscope.business"
-        versionCode = "150"
-        version     = "1.5.0" >
+        versionCode = "151"
+        version     = "1.5.1" >
 
     <!-- versionCode is optional and Android only -->
 
@@ -16,7 +16,7 @@
     <author href="https://www.infinisystem.com" email="support@infiniteit.biz">
         Infini Systems
     </author>
-    <preference name="android-targetSdkVersion" value="26"/>
+    <preference name="android-targetSdkVersion" value="28"/>
     
     <preference name="orientation" value="portrait" />
     

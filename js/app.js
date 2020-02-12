@@ -577,38 +577,40 @@ app.controller("homeCtrl", function ($scope, $http, $interval, $timeout, $rootSc
     if (online()) {
       var toSync = get("toSync");
       var itemsProcessed = 0;
-      toSync.forEach(function (bookingData, index) {
-        bookingData.data["mode"] = "offline";
-        $.ajax({
-          url: bookingData.url,
-          type: bookingData.type,
-          data: bookingData.data,
-          success: function (result) {
-            $scope.isDisabled = false;
-            if (result === "Booking added") {
-              toSync[index].isAdded = true;
-              refresh();
-              toast("Booking Added.");
-              $("#modal1").closeModal();
-              $("#addBooking").each(function () {
-                this.reset();
-              });
-              $scope.rnum = "";
-            } else {
-              toSync[index].isAdded = false;
-              toast(result.msg);
+      if(toSync) {
+        toSync.forEach(function (bookingData, index) {
+          bookingData.data["mode"] = "offline";
+          $.ajax({
+            url: bookingData.url,
+            type: bookingData.type,
+            data: bookingData.data,
+            success: function (result) {
+              $scope.isDisabled = false;
+              if (result === "Booking added") {
+                toSync[index].isAdded = true;
+                refresh();
+                toast("Booking Added.");
+                $("#modal1").closeModal();
+                $("#addBooking").each(function () {
+                  this.reset();
+                });
+                $scope.rnum = "";
+              } else {
+                toSync[index].isAdded = false;
+                toast(result.msg);
+              }
+              itemsProcessed++;
+              if (itemsProcessed === toSync.length) {
+                toSync = toSync.filter(data => {
+                  return data.isAdded == false;
+                });
+                set("toSync", toSync);
+              }
             }
-            itemsProcessed++;
-            if (itemsProcessed === toSync.length) {
-              toSync = toSync.filter(data => {
-                return data.isAdded == false;
-              });
-              set("toSync", toSync);
-            }
-          }
+          });
+  
         });
-
-      });
+      }
     } else {
       alert(
         "Data cannot be synced as the device is not connected to the internet"

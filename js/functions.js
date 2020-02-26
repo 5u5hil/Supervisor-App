@@ -41,7 +41,7 @@ $('#open-left').sideNav({
 });
 
 // Swipebox
-$('.swipebox').swipebox();
+// $('.swipebox').swipebox();
 
 // Masonry
 $('.grid').masonry({

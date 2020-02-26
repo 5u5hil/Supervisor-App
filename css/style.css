@@ -2526,3 +2526,5 @@ color : #c50202!important;
   line-height: 36px; 
   padding: 0 1rem;
  }
+
+ .html{-webkit-backface-visibility: hidden;}
